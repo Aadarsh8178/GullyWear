@@ -2,8 +2,7 @@ import React from 'react';
 import App from 'next/app';
 
 import Navbar from '../components/UI/Navbar'
-import {LookProvider} from '../context'
-
+import {LookProvider} from '../store/context'
 
 class MyApp extends App {
   render() {

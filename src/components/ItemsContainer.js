@@ -1,12 +1,15 @@
-import React, {useState } from 'react'
+import React, {useState,useContext} from 'react'
 
 import Filter from './Filter';
 import ItemsList from './ItemsList';
 import Loading from './UI/Loading';
 import Backdop from './UI/Backdrop';
+import {LookContext} from '../store/context';
 
 const ItemsContainer = ({loading,sortedItems})=>{
     const [filterShow,setFilterShow] = useState(false);
+    const {filterApplied} = useContext(LookContext);
+
     if(loading){
         return <Loading/>
     }
@@ -16,7 +19,7 @@ const ItemsContainer = ({loading,sortedItems})=>{
     return(
         <>
         {filterShow?<Backdop open onclick={handlechange}/>:<Backdop />}
-        <div className="filter">{filterShow?<Filter/>:<p onClick={handlechange}>FILTER</p>}</div>
+    <div className={filterApplied?"filter active":"filter"}>{filterShow?<Filter/>:<p onClick={handlechange}>{filterApplied?"FILTER ON":"FILTER"}</p>}</div>
         <ItemsList Items={sortedItems} />
         <style jsx>{`
             .filter{
@@ -39,6 +42,11 @@ const ItemsContainer = ({loading,sortedItems})=>{
                 font-weight:bold;
                 font-size:14px;
                 color:black;
+            }
+            .active p{
+                font-weight:bold;
+                font-size:14px;
+                color:rgb(160, 146, 17);
             }
             @media screen and (max-width:768px)
             {

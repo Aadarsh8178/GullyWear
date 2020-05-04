@@ -1,6 +1,6 @@
 import React,{useContext} from 'react';
 
-import {LookContext} from '../context';
+import {LookContext} from '../store/context';
 
 //get all unique values
 const getUnique = (items,value)=>{

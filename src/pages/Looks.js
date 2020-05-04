@@ -1,6 +1,6 @@
 import React,{useContext} from 'react'
 
-import {LookContext} from '../context'
+import {LookContext} from '../store/context'
 import ItemsContainer from '../components/ItemsContainer'
 const Looks = () => {
     const context = useContext(LookContext)

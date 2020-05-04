@@ -11,7 +11,7 @@ import {FiShoppingBag} from "react-icons/fi";
 import SideDrawer from './SideDrawer'
 import Backdrop from './Backdrop'
 import logo from '../../../public/static/images/logo.png'
-import {LookContext} from '../../context'
+import {LookContext} from '../../store/context'
 
 
 Router.onRouteChangeStart = url => {

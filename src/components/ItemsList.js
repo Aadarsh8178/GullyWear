@@ -1,7 +1,7 @@
 import React from 'react'
 import Item from './Item'
 
-export default function ItemList({Items}) {
+const ItemList = ({Items})=> {
     if(Items.length===0){
         return (
             <div className="empty-search">
@@ -45,3 +45,5 @@ export default function ItemList({Items}) {
         `}</style>
     </section>
 }
+
+export default ItemList

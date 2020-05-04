@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import Router from 'next/router';
 
 import Featured from '../components/Featured';
-import {LookContext} from '../context';
+import {LookContext} from '../store/context';
 import Slider from '../components/Slider/Slider';
 import Banner from '../components/Banner';
+import FallbackSlider from '../components/Fallbacks/FallbackSlider';
 
 const index = ()=>{
     const context = useContext(LookContext)
@@ -33,7 +34,7 @@ const index = ()=>{
                 autoplay={true} 
                 time={4000}
                 onChange={handleChange}/>
-            </div>:null}
+            </div>:<div className="main-slider"><FallbackSlider/></div>}
         <Featured/>
     <style jsx>{`
         .imagealign{

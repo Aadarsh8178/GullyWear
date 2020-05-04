@@ -1,7 +1,7 @@
 import React, {useState,useContext,useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Slider from '../../components/Slider/Slider';
-import {LookContext} from '../../context';
+import {LookContext} from '../../store/context';
 import Loading from '../../components/UI/Loading';
 import {FiStar} from 'react-icons/fi';
 

@@ -37,7 +37,7 @@ export default function SideDrawer(props) {
                             <Link href="/about"><div><a onClick={props.handleToggle}>About Us</a></div></Link>
                         </li>
                         <li>
-                            <Link href="/return"><div><a onClick={props.handleToggle}>Return/Exchange</a></div></Link>
+                            <Link href="/returns"><div><a onClick={props.handleToggle}>Return/Exchange</a></div></Link>
                         </li>
                     </ul>
                 </div>

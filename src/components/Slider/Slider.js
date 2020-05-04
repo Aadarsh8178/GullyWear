@@ -5,8 +5,29 @@ import {FiChevronLeft,FiChevronRight} from 'react-icons/fi'
 import {GoPrimitiveDot} from "react-icons/go";
 import sliderStyle from './sliderStyle';
 
-function Slider(props) {
+const Slider = (props)=> {
     let images = props.images
+    if(!images){
+        return (
+            <>
+            <div className="slider">
+                <div className="fallbackTile slide"></div>
+            </div>
+        <style jsx>{`
+        .slider{
+            height: 100%;
+            width:100%;
+        }
+        .fallbackTile{
+            background-color: rgba(0,0,0,0.5);
+            height:100%;
+            width:100%;
+
+        }
+        `}</style>
+            </>
+        )
+    }
     let sliderArr = images.map(img => (<ImgComp src={img.url}>{img.extra}</ImgComp>))
     const [x,setX] = useState(0)
     const [touched,setTouched] = useState(false)
