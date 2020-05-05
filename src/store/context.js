@@ -37,25 +37,6 @@ const formatData = (items)=>{
     })
     return tempItems   
 }
-const initialfetch = (state)=>{
-    let looks = formatData(items);
-    let featuredLooks = looks.filter(look => look.featured===true)
-    let mainpage = looks.find(look => look.type==="Main")
-    let maxPrice = Math.max(...looks.map(item => item.price))
-    let minPrice = Math.min(...looks.map(item => item.price))
-    
-    return{
-        ...state,
-        looks,
-        sortedLooks:looks,
-        featuredLooks,
-        loading:false,
-        price:maxPrice,
-        maxPrice,
-        minPrice,
-        mainpage
-    }
-}
 const handleSort = (state,name) =>{
     if(name=="high-low"){
         return {
@@ -131,7 +112,7 @@ const reducer = (state,action)=>{
     switch(action.type){
         case actionType.TOGGLE_DRAWER: return {...state,sidedrawer:!state.sidedrawer}
         case actionType.CLOSE_DRAWER: return {...state,sidedrawer:false}
-        case actionType.INIT_SETUP: return initialfetch(state)
+        case actionType.INIT_SETUP:return  {...state,...action.newState}
         case actionType.SORT:return handleSort(state,action.name)
         case actionType.FILTER_LOOKS:return filterLooks(state)
         case actionType.SLIDE:return {...state,[action.name]:action.value}
@@ -145,7 +126,26 @@ const LookProvider = (props)=>{
     const [state,dispatch] = useReducer(reducer,initialState)
 
     useEffect(()=>{
-        dispatch({type:actionType.INIT_SETUP});
+        (async function(){
+            let looks = await formatData(items);
+            let featuredLooks = looks.filter(look => look.featured===true)
+            let mainpage = looks.find(look => look.type==="Main")
+            let maxPrice = Math.max(...looks.map(item => item.price))
+            let minPrice = Math.min(...looks.map(item => item.price))
+            
+            const addProp = {
+                looks,
+                sortedLooks:looks,
+                featuredLooks,
+                loading:false,
+                price:maxPrice,
+                maxPrice,
+                minPrice,
+                mainpage
+            }
+            
+            dispatch({type:actionType.INIT_SETUP,newState:addProp});
+        }())
     },[])
 
     const getLook = (slug)=>{

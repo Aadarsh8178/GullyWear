@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import defaultImg from '../../public/static/images/defaultBcg.jpg'
 
 const Item = ({item})=> {
-  console.log(item)
     const {slug,images,price,brand,description}= item
     
     return (
