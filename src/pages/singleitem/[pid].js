@@ -1,4 +1,4 @@
-import React, {useState,useContext,useMemo } from 'react';
+import React, {useState,useContext,useMemo, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Slider from '../../components/Slider/Slider';
 import {LookContext} from '../../store/context';
@@ -9,15 +9,19 @@ const SingleItem = ()=> {
     const router = useRouter()
     const {pid} = router.query
     let [current,setCurrent] = useState(0);
-    
+    let [item,setItem] = useState(null);
     const handleChange = (newValue)=>{
         setCurrent(newValue)
     }  
     const context = useContext(LookContext);
     let {loading,getLook} = context
     
-    const item = useMemo( ()=>getLook(pid),[pid]);
-   
+    useEffect(()=>{
+      if(!item){
+        setItem(getLook(pid));
+      }
+    },)
+    
     if(!item){
         return (<div>Not Found</div>)
     }
