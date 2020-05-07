@@ -20,7 +20,8 @@ export default css.global`
 
 .goLeft{
     position:absolute;
-    top:45%;
+    top:50%;
+    transform:translate(-15%,-50%);
     left:0; 
     width:10%;
     height:10%;
@@ -31,7 +32,8 @@ export default css.global`
 .goRight{
     position:absolute;
     background: none;
-    top:45%;
+    top:50%;
+    transform:translate(15%,-50%);
     right:0;
     width:10%;
     height:10%;
