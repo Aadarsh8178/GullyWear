@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import defaultImg from '../../public/static/images/defaultBcg.jpg'
 
 const Item = ({item})=> {
     const {slug,images,price,brand,description}= item
@@ -10,7 +9,7 @@ const Item = ({item})=> {
         <div className="item">
           <a href={`http://localhost:3000/singleitem/${slug}`} target="_blank">
             <div className="img-container">
-                <img src={images[0].url||defaultImg}
+                <img src={images[0].url}
                  alt="Unable to load"/> 
                  <div className="about">
                       <p className="brand">{brand}</p>

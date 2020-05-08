@@ -17,7 +17,8 @@ const initialState = {
     lowtohigh:false,
     hightolow:false,
     sidedrawer:false,
-    filterApplied:false
+    filterApplied:false,
+    signedIn:false
 }
 const formatData = (items)=>{
     let tempItems = items.map(item => {

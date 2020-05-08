@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import Router from 'next/router';
 
-import Featured from '../components/Featured';
+import Featured from '../components/Featured/Featured';
 import {LookContext} from '../store/context';
 import Slider from '../components/Slider/Slider';
-import Banner from '../components/Banner';
+import Banner from '../components/UI/Banner';
 import FallbackSlider from '../components/Fallbacks/FallbackSlider';
 
 const index = ()=>{

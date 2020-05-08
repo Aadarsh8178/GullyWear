@@ -1,10 +1,10 @@
 import React, {useState,useContext} from 'react'
 
-import Filter from './Filter';
+import Filter from '../Filter/Filter';
 import ItemsList from './ItemsList';
-import Loading from './UI/Loading';
-import Backdop from './UI/Backdrop';
-import {LookContext} from '../store/context';
+import Loading from '../UI/Loading';
+import Backdop from '../UI/Backdrop';
+import {LookContext} from '../../store/context';
 
 const ItemsContainer = ({loading,sortedItems})=>{
     const [filterShow,setFilterShow] = useState(false);

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 
-import {LookContext} from '../store/context';
-import Loading from './UI/Loading';
-import Item from './Item';
-import Title from './Title';
+import {LookContext} from '../../store/context';
+import Loading from '../UI/Loading';
+import Item from '../Items/Item';
+import Title from '../UI/Title';
 
 const Featured = ()=>{
     const context = useContext(LookContext)
@@ -16,7 +16,7 @@ const Featured = ()=>{
         <section className="items">
             <Title title="featured"/>
             <div className="items-center">
-                {loading?null:items}
+                {loading?<Loading/>:items}
             </div>
         </section>
     <style jsx>{`

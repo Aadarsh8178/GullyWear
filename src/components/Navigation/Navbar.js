@@ -1,33 +1,30 @@
 import React,{useState,useContext} from 'react'
 import Link from 'next/link'
-import Nprogress from 'nprogress';
-import Router from 'next/router';
+import {useRouter} from 'next/router';
 
 import {FaAlignLeft} from 'react-icons/fa'
 import {FiUser} from 'react-icons/fi'
 import {FiSearch} from 'react-icons/fi'
 import {FiStar} from 'react-icons/fi'
 import {FiShoppingBag} from "react-icons/fi";
+
 import SideDrawer from './SideDrawer'
-import Backdrop from './Backdrop'
+import Backdrop from '../UI/Backdrop'
 import logo from '../../../public/static/images/logo.png'
 import {LookContext} from '../../store/context'
 
-
-Router.onRouteChangeStart = url => {
-  console.log('Started')
-  Nprogress.start()
-}
-Router.onRouteChangeComplete = () => Nprogress.done()
-Router.onRouteChangeError = () => Nprogress.done();
+import Modal from '../UI/Modal'
+import Login from '../Login/index'
 
 const Navbar = ()=>{
+  const Router = useRouter();
   const context = useContext(LookContext)
   const [state,setState] = useState({
     bagItems:0,
     favs:0,
     search:false
   })
+  const [showSign,setShowSign] = useState(false)
   const [searchInput,setSearchInput] = useState("")
   const handleChange = event => {
     setSearchInput(event.target.value)
@@ -37,9 +34,20 @@ const Navbar = ()=>{
       return {...state,search:!prev.search}
     })
   }
+  const handleProfileClick = ()=>{
+    if(context.signedIn){
+      Router.push('/profile')
+    }else{
+      setShowSign(true)
+    }
+  }
+  const closeModal = ()=>{
+    setShowSign(false)
+  }
   const {toggledrawer,closedrawer,sidedrawer:isOpen} = context
   return (
     <div>
+      <Modal show={showSign} modalClosed={closeModal}><Login/></Modal>
       <Backdrop open={isOpen} onclick={toggledrawer}></Backdrop>
       <nav className="navbar">
           <div className="nav-header">
@@ -56,10 +64,16 @@ const Navbar = ()=>{
                     className={state.search?"search-form showsf":"search-form"}
                   />
               <FiSearch size={20} className={state.search?"search":"search shows"} onClick={handleSearchToggle}/>
-              <Link href="/profile"><a><FiUser size={20} className="profile"/></a></Link>
-              <Link href="/favourite"><a><FiStar size={20} className="fav"/></a></Link>
+              <a onClick={handleProfileClick} className="profile"><FiUser size={20} />
+                <span className="profile-hover">Profile</span>
+              </a>
+              <Link href="/favourite"><a className="fav"><FiStar size={20} />
+                <span className="fav-hover">Favuorite</span>
+              </a></Link>
               <span className="favn">{state.favs}</span>
-              <Link href="/bag"><a className="bag"><FiShoppingBag size={20}/></a></Link>
+              <Link href="/bag"><a className="bag"><FiShoppingBag size={20}/>
+              <span className="bag-hover">Bag</span>
+              </a></Link>
               <span className="bagn">{state.bagItems}</span>
             </div>
           </div>
@@ -85,9 +99,19 @@ const Navbar = ()=>{
       </nav>
       <SideDrawer open={isOpen} handleToggle={toggledrawer}></SideDrawer>
       <style global jsx>{`
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 0.1rem 0;
+          background: white;
+          z-index: 100;
+        }
         .nav-header{
           display:grid;
           grid-template-columns:1fr 50px 1fr;
+          grid-template-rows:54.8px;
           justify-content:start;
           width:100%;
         }
@@ -108,22 +132,48 @@ const Navbar = ()=>{
             grid-template-areas:"search profile fav favn bag bagn";               
           }
         }
+        .profile-hover,.bag-hover,.fav-hover{
+          display:none;
+          position:absolute;
+          height:1.5rem;
+          padding:4px;
+          top:2rem;
+          left:-0.5rem;
+          font-size:12px;
+          font-family:GothamHTF-Book, sans-serif;
+          background:black; 
+          color:white;
+        }
         .profile{
           grid-area:profile;
+          position:relative;
+        }
+        .profile:hover .profile-hover{
+          display:block;
         }
         .fav{
           grid-area:fav;
+          position:relative; 
+        }
+        .fav:hover .fav-hover{
+          display:block;
         }
         .favn{
           grid-area:favn;
         }
         .bag{
           grid-area:bag;
+          position:relative;
+        }
+        .bag:hover .bag-hover{
+          display:block;
         }
         .bagn{
           grid-area:bagn;
         }
+        
         .search{
+          position:relative;
           opacity:0;
           width:0;
           cursor:pointer;
@@ -140,6 +190,7 @@ const Navbar = ()=>{
           width:0;
           opacity:0;
         }
+        
         .shows{
           width:auto;
           opacity:1;
@@ -178,15 +229,6 @@ const Navbar = ()=>{
         }
         .search-form:focus{
           outline:none;
-        }
-        .navbar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          padding: 0.1rem 0;
-          background: white;
-          z-index: 100;
         }
         .nav-btn {
           height:25px;
@@ -243,6 +285,7 @@ const Navbar = ()=>{
           }
         }
         a{
+          cursor:pointer;
           color:black;
         }
       `}</style>
