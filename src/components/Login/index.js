@@ -14,18 +14,20 @@ function index() {
       <style jsx>{`
       .SigninUp{
         display:flex;
-        margin:1rem 35%;
-        justify-content:space-between;
+        margin:1rem 0;
+        justify-content:center;
       }
       .active{
         color:blue;
       }
       .login{
         cursor:pointer;
+        margin:0 1rem;
       }
       .login-form{
         transition: height 0.3s ease-out;
       }
+      
       `}</style>
     </div>
   )
