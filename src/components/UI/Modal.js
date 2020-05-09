@@ -12,7 +12,7 @@ function Modal(props){
                     transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
                     opacity: props.show ? '1' : '0'
                 }}>
-                {props.children}
+                {props.show?props.children:null}
             </div>
             <style jsx>{`
                 .Modal {
@@ -24,7 +24,7 @@ function Modal(props){
                     box-shadow: 1px 1px 1px black;
                     padding: 16px;
                     left: 15%;
-                    top: 10%;
+                    top: 20%;
                     box-sizing: border-box;
                     transition: all 0.3s ease-out;
                 }

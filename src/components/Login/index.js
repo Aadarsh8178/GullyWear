@@ -14,7 +14,7 @@ function index() {
       <style jsx>{`
       .SigninUp{
         display:flex;
-        margin:1rem 0;
+        margin:0.5rem 0;
         justify-content:center;
       }
       .active{
