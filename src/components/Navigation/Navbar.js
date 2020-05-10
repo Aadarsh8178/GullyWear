@@ -19,35 +19,30 @@ import Login from '../Login/index'
 const Navbar = ()=>{
   const Router = useRouter();
   const context = useContext(LookContext)
-  const [state,setState] = useState({
-    bagItems:0,
-    favs:0,
-    search:false
-  })
-  const [showSign,setShowSign] = useState(false)
+  const {signedIn,NofavItems,NobagItems} = context
+  const [search,setSearch] = useState(false)
+  const [showLogin,setShowLogin] = useState(false)
   const [searchInput,setSearchInput] = useState("")
   const handleChange = event => {
     setSearchInput(event.target.value)
   };
   const handleSearchToggle = ()=>{
-    setState(prev => {
-      return {...state,search:!prev.search}
-    })
+    setSearch(prev => !prev)
   }
   const handleProfileClick = ()=>{
-    if(context.signedIn){
+    if(signedIn){
       Router.push('/profile')
     }else{
-      setShowSign(true)
+      setShowLogin(true)
     }
   }
   const closeModal = ()=>{
-    setShowSign(false)
+    setShowLogin(false)
   }
   const {toggledrawer,closedrawer,sidedrawer:isOpen} = context
   return (
     <div>
-      <Modal show={showSign} modalClosed={closeModal}><Login/></Modal>
+      <Modal show={showLogin} modalClosed={closeModal}><Login/></Modal>
       <Backdrop open={isOpen} onclick={toggledrawer}></Backdrop>
       <nav className="navbar">
           <div className="nav-header">
@@ -61,20 +56,20 @@ const Navbar = ()=>{
                     placeholder="Search"
                     value={searchInput}
                     onChange={handleChange}
-                    className={state.search?"search-form showsf":"search-form"}
+                    className={search?"search-form showsf":"search-form"}
                   />
-              <FiSearch size={20} className={state.search?"search":"search shows"} onClick={handleSearchToggle}/>
+              <FiSearch size={20} className={search?"search":"search shows"} onClick={handleSearchToggle}/>
               <a onClick={handleProfileClick} className="profile"><FiUser size={20} />
                 <span className="profile-hover">Profile</span>
               </a>
               <Link href="/favourite"><a className="fav"><FiStar size={20} />
-                <span className="fav-hover">Favuorite</span>
+                <span className="fav-hover">Favourite</span>
               </a></Link>
-              <span className="favn">{state.favs}</span>
+              <span className="favn">{NofavItems}</span>
               <Link href="/bag"><a className="bag"><FiShoppingBag size={20}/>
               <span className="bag-hover">Bag</span>
               </a></Link>
-              <span className="bagn">{state.bagItems}</span>
+              <span className="bagn">{NobagItems}</span>
             </div>
           </div>
           <div className="links-container">
@@ -97,7 +92,11 @@ const Navbar = ()=>{
             </ul>
           </div> 
       </nav>
-      <SideDrawer open={isOpen} handleToggle={toggledrawer}></SideDrawer>
+      <SideDrawer 
+        open={isOpen} 
+        handleToggle={toggledrawer} 
+        showLogin={showLogin} 
+        setShowLogin={setShowLogin}/>
       <style global jsx>{`
         .navbar {
           position: fixed;

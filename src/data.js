@@ -50,7 +50,7 @@ export default [
             price:500,
             description:`Nice pair of shoes always adds to the dress`,
             item_type:"Shoes",
-            link:"/shoes"
+            link:"/shoes",
           }
         },
         {
@@ -94,7 +94,8 @@ export default [
             hem. Muscle Fit – a fit designed to showcase the 
             physique. Narrow shoulders and tapered sleeves 
             create a flattering silhouette.`,
-            link:""
+            link:"",
+            slug:'Look1123123'
           }
         },
         {
@@ -111,7 +112,9 @@ export default [
             physique. Narrow shoulders and tapered sleeves 
             create a flattering silhouette.`,
             item_type:"Shirt",
-            link:"https://www2.hm.com/en_in/productpage.0618319002.html"
+            link:"https://www2.hm.com/en_in/productpage.0618319002.html",
+            slug:'Lookshirt1123123',
+            sizes:['M','S','XL']
           }
         },
         {
@@ -124,7 +127,9 @@ export default [
              denim with a regular waist, zip fly and 
              skinny legs.`,
             item_type:"Denim",
-            link:"https://www2.hm.com/en_in/productpage.0664647029.html"
+            link:"https://www2.hm.com/en_in/productpage.0664647029.html",
+            slug:'Look1denim1123123',
+            sizes:['M','S','XL']
           }
         }
       ]
@@ -154,7 +159,8 @@ export default [
             pocket and ribbing at the cuffs and hem. Soft 
             brushed inside.`,
             item_type:"Look1",
-            link:""
+            link:"",
+            slug:'Look21123123'
           }
         },
         {
@@ -168,7 +174,9 @@ export default [
             pocket and ribbing at the cuffs and hem. Soft 
             brushed inside.`,
             item_type:"hoodie",
-            link:"https://www2.hm.com/en_in/productpage.0685814033.html"
+            link:"https://www2.hm.com/en_in/productpage.0685814033.html",
+            slug:'Look2sweat1123123',
+            sizes:['M','S','XL'],
           }
         },
         {
@@ -181,7 +189,9 @@ export default [
              denim with a regular waist, zip fly and button,
               and skinny legs.`,
             item_type:"Denim",
-            link:"https://www2.hm.com/en_in/productpage.0730863005.html"
+            link:"https://www2.hm.com/en_in/productpage.0730863005.html",
+            slug:'Look2denim121123123',
+            sizes:['M','S','XL']
           }
         }
       ]
@@ -214,7 +224,8 @@ export default [
             drawstring. Zip with a wind flap and press-studs
              down the front, zipped, diagonal front pockets
               and an inner pocket. Ribbing at the cuffs and
-               hem. Lined.`
+               hem. Lined.`,
+            slug:'Look31123123123'
           }
         },
         {
@@ -230,7 +241,9 @@ export default [
             drawstring. Zip with a wind flap and press-studs
              down the front, zipped, diagonal front pockets
               and an inner pocket. Ribbing at the cuffs and
-               hem. Lined.`
+               hem. Lined.`,
+            slug:'Lookpadded31123123123',
+            sizes:['M','S','XL']
           }
         },
         {
@@ -244,7 +257,9 @@ export default [
             back pocket, contrasting colour stripes down 
             the sides and ribbed hems. Soft brushed inside.`,
             item_type:"jogger",
-            link:"https://www2.hm.com/en_in/productpage.0694968012.html"
+            link:"https://www2.hm.com/en_in/productpage.0694968012.html",
+            slug:'Look3jogger1123123123',
+            sizes:['M','S','XL']
           }
         },
         {
@@ -257,7 +272,9 @@ export default [
             description:`T-shirt in cotton jersey with a 
             print motif on the front and ribbing around 
             the neckline.`,
-            link:"https://www2.hm.com/en_in/productpage.0789525018.html"
+            link:"https://www2.hm.com/en_in/productpage.0789525018.html",
+            slug:'Look3tshirt1123123123',
+            sizes:['M','S','XL']
           }
         }
       ]
@@ -284,7 +301,8 @@ export default [
             },
             price:2500,
             item_type:"Look1",
-            link:""
+            link:"",
+            slug:'Look41112323123123'
           }
         },
         {
@@ -294,7 +312,8 @@ export default [
             },
             price:500,
             item_type:"Tshirt",
-            link:"https://www2.hm.com/en_in/productpage.0513699009.html"
+            link:"https://www2.hm.com/en_in/productpage.0513699009.html",
+            slug:'Look4tsirt1112323123123'
           }
         },
         {
@@ -304,7 +323,8 @@ export default [
             },
             price:2000,
             item_type:"denim",
-            link:"https://www2.hm.com/en_in/productpage.0664647029.html"
+            slug:'Lookdenim41112323123123',
+            link:"https://www2.hm.com/en_in/productpage.0664647029.html",
           }
         }
       ]
@@ -338,7 +358,9 @@ export default [
             at the thighs, knees and ankles to create a 
             completely fitted silhouette.`,
             item_type:"Look1",
-            link:""
+            link:"",
+            slug:'Look514563123123'
+
           }
         },
         {
@@ -357,6 +379,7 @@ export default [
             with slightly shorter legs that is close-fitting
             at the thighs, knees and ankles to create a 
             completely fitted silhouette.`,
+            slug:'Look5tuxedo14563123123',
             link:""
           }
         },
@@ -376,6 +399,7 @@ export default [
             with slightly shorter legs that is close-fitting
             at the thighs, knees and ankles to create a 
             completely fitted silhouette.`,
+            slug:'Look5trouser14563123123',
             link:"https://www2.hm.com/en_in/productpage.0768410001.html"
           }
         },
@@ -393,6 +417,7 @@ export default [
               pockets. Skinny Fit – a fit with slightly shorter
                legs that is close-fitting at the thighs, knees 
                and ankles to create a completely fitted silhouette.`,
+            slug:'Look5trouder14563123123',
             link:"https://www2.hm.com/en_in/productpage.0784280001.html"
           }
         }

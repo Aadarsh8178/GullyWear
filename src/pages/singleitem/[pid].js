@@ -14,7 +14,7 @@ const SingleItem = ()=> {
         setCurrent(newValue)
     }  
     const context = useContext(LookContext);
-    let {loading,getLook} = context
+    let {loading,getLook,addtoFav,removeFav} = context
     
     useEffect(()=>{
       if(!item){
@@ -59,33 +59,47 @@ const SingleItem = ()=> {
         `}</style>
         </div>
     )
-    const imgdesc = item.images.map(item =>{
+    const imgdesc = item.images.map(it =>{
         return (<div>
-            <div className="desc">{item.description}</div>
+            <div className="desc">{it.description}</div>
             <div className="add">
-                <div className="favorite"><FiStar size={20} className="favsingle"/>Add to favorite</div>
-                {item.link!==""?<a href={item.link} target="_blank" className="link"><div className="buy">Buy</div></a>:null}
+                <div className={item.fav?"favorite added":"favorite"} onClick={item.fav?()=>removeFav(item,item.slug):() => addtoFav(item)}><FiStar size={20}/><span>Add to favourite</span></div>
+                {it.link!==""?<a href={it.link} target="_blank" className="link"><div className="buy">Buy</div></a>:null}
             </div>
         <style jsx>{`
             .add{
                 display:flex;
                 width:30vw;
                 margin-top:3rem;
-                justify-content:space-between;
-              }
-              .favsingle{
-                margin-right:0.5rem;
-                vertical-align:bottom;
               }
               .favorite,.buy{
+                display:flex;
                 text-align:center;
                 padding:5px 0;
                 cursor:pointer;
-                width:13vw;
+                width:4rem;
                 background:white;
                 color:black;
                 font-size:15px;
-                transition: 0.2s ease-in-out;
+                justify-content:center;
+                transition:all 0.2s linear; 
+              }
+              .favorite{
+                width:10rem;  
+                margin-right:1rem; 
+              }
+              .added{
+                background:black;
+                color:white;
+              }
+              .favorite span{
+                margin-left:3px;
+              }
+              .favorite:hover,.buy:hover{
+                background:black;
+                color:white;
+                transition:all 0.2s linear; 
+
               }
               a{
                 text-decoration:none;

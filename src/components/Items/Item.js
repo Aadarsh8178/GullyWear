@@ -1,9 +1,22 @@
-import React from 'react'
+import React,{useContext,useState} from 'react';
+import {LookContext} from '../../store/context';
+
+import {AiFillStar} from 'react-icons/ai';
+
 import PropTypes from 'prop-types'
 
 const Item = ({item})=> {
-    const {slug,images,price,brand,description}= item
-    
+    const {addtoFav,removeFav} = useContext(LookContext)
+    const [fav,setFav] = useState(item.fav)
+    const {slug,brand,description,price,images} = item
+    const handleFavClick = ()=>{
+      if(fav){
+        removeFav(item,slug)
+      }else{
+        addtoFav(item)
+      }
+      setFav(prev => !prev)
+    }
     return (
         <>
         <div className="item">
@@ -17,17 +30,18 @@ const Item = ({item})=> {
                       <p className="price">Rs.{price}</p>
                     </div>
             </div>
-          </a> 
+          </a>
+          <span className={fav?"active star":"star"} onClick={handleFavClick}><AiFillStar  size={20}/></span> 
         </div>
     <style jsx>{`
         .item {
             display:grid;
+            position:relative;
             align-items:center;
             justify-items:center
             align-content:start;
             transition: all 0.3s linear;
           }
-          
           .item:hover .about{
             z-index:2;
             opacity:1;
@@ -42,6 +56,7 @@ const Item = ({item})=> {
             width:100%;
             opacity:0;
             background:white;
+            z-index:5;
             transition: all 0.3s ease-in-out;
           }
           .about p{
@@ -56,6 +71,19 @@ const Item = ({item})=> {
           }
           .price{
             font-weight:bold;
+          }
+          .star{
+            position:absolute;
+            cursor:pointer;
+            z-index:10;
+            right:0;
+            bottom:0;
+            margin-right:1rem;
+            color:grey;
+          }
+          .active{
+            color:red;
+           
           }
           }
           .img-container {

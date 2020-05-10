@@ -18,9 +18,12 @@ const initialState = {
     hightolow:false,
     sidedrawer:false,
     filterApplied:false,
-    signedIn:false
+    signedIn:false,
+    favoriteLooks:[],
+    NofavItems:0,
+    NobagItems:0,
 }
-const formatData = (items)=>{
+const formatData = (items,favoriteLooks)=>{
     let tempItems = items.map(item => {
         let id = item.sys.id;
         let images = item.fields.images.map(image => {
@@ -28,12 +31,12 @@ const formatData = (items)=>{
                 price:image.fields.price,
                 type:image.fields.item_type,
                 link:image.fields.link,
-                description:image.fields.description
+                description:image.fields.description,
+                slug:image.fields.slug,
             }
-            
             return img
         })
-        let look = {...item.fields,images,id};
+        let look = {...item.fields,images,id,fav:Boolean(favoriteLooks.find(look => look.id===slug))};
         return look
     })
     return tempItems   
@@ -53,6 +56,11 @@ const handleSort = (state,name) =>{
             hightolow:false
         }
     }
+}
+const fetchFav = ()=>{
+    //Implement fetching of favuorite items from server,, Ids are fetched then corresponding look data 
+    // added to temp array returned
+    return []
 }
 const filterLooks = (state)=>{
     let {
@@ -109,6 +117,19 @@ const filterLooks = (state)=>{
         sortedLooks:tempLooks
     }
 }
+const addtoFav = (state,look)=>{   
+    look.fav=true;
+    return {...state,
+        NofavItems:state.NofavItems+1,
+        favoriteLooks:state.favoriteLooks.concat({id:look.slug,look:look})
+    }
+}
+const removeFav = (state,look,id)=>{
+    look.fav=false;
+    return {...state,
+        NofavItems:state.NofavItems-1,
+        favoriteLooks:state.favoriteLooks.filter(look => look.id!=id)}
+}
 const reducer = (state,action)=>{
     switch(action.type){
         case actionType.TOGGLE_DRAWER: return {...state,sidedrawer:!state.sidedrawer}
@@ -119,6 +140,9 @@ const reducer = (state,action)=>{
         case actionType.SLIDE:return {...state,[action.name]:action.value}
         case actionType.FILTER_APPLIED:return{...state,filterApplied:true}
         case actionType.FILTER_REMOVED:return{...state,filterApplied:false}
+        case actionType.ADDTOFAV:return addtoFav(state,action.look)
+        case actionType.REMOVEFAV:return removeFav(state,action.look,action.id)
+        case actionType.SET_FAV:return {...state,favoriteLooks:action.payload}
         default: return state
     }
 }
@@ -128,7 +152,9 @@ const LookProvider = (props)=>{
 
     useEffect(()=>{
         (async function(){
-            let looks = await formatData(items);
+            let favLoooks = await fetchFav()
+            await dispatch({type:actionType.SET_FAV,payload:favLoooks})
+            let looks = await formatData(items,state.favoriteLooks);
             let featuredLooks = looks.filter(look => look.featured===true)
             let mainpage = looks.find(look => look.type==="Main")
             let maxPrice = Math.max(...looks.map(item => item.price))
@@ -174,7 +200,10 @@ const LookProvider = (props)=>{
         handleScroll:handleScroll,
         handleChange:handleSortClick,
         toggledrawer:()=>dispatch({type:actionType.TOGGLE_DRAWER}),
-        closedrawer:()=>dispatch({type:actionType.CLOSE_DRAWER})}}>
+        closedrawer:()=>dispatch({type:actionType.CLOSE_DRAWER}),
+        addtoFav: (look)=>dispatch({type:actionType.ADDTOFAV,look}),
+        removeFav: (look,id)=>dispatch({type:actionType.REMOVEFAV,look,id})
+        }}>
             {props.children}
         </LookContext.Provider>
     ) 

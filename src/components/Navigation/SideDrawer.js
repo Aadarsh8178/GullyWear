@@ -27,7 +27,7 @@ export default function SideDrawer(props) {
                 <div className="item">
                     <ul>
                         <li>
-                            <Link href="/login"><div><a onClick={props.handleToggle}>Sign in/join</a></div></Link>
+                            <div><a onClick={()=> {props.setShowLogin(true); props.handleToggle()}}>Sign in/join</a></div>
                         </li>
                     </ul>
                 </div>
