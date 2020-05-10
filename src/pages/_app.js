@@ -21,7 +21,7 @@ class MyApp extends App {
     body {
       padding-top:85px;
       color: #222;
-      background: white;
+      background: rgb(250, 249, 248);
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       line-height: 1.4;
     }

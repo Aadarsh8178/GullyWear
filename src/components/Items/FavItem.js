@@ -1,6 +1,5 @@
 import React,{useContext} from 'react';
 import Link from 'next/link';
-
 import {LookContext} from '../../store/context';
 
 import {FiShoppingBag} from "react-icons/fi";
@@ -8,8 +7,7 @@ import {RiCloseLine} from 'react-icons/ri';
 
 function FavItem({item}) {
     const {removeFav} = useContext(LookContext)
-    const {slug,images,price,description,brand}= item
-    console.log(item)
+    const {slug,images,price,description,brand,color}= item
     return (
         <div className="item">
           <div className="card">
@@ -21,8 +19,10 @@ function FavItem({item}) {
             </a> 
             <div className="side">
                 <div className="details">
-                    <h6 className="desc">{description}</h6>
-                    <h6 className="price"><span>&#8377;</span>{price}</h6>
+                    <p className="desc">{description}</p>
+                    <p className="price"><span>&#8377;</span>{price}</p>
+                    <p className="brand"><span className="align">brand: </span><span>{brand}</span></p>
+                    <p className="color"><span className="align">color: </span><span>{color}</span></p>
                 </div>
                 <div className="buttons big">
                     <select id="size">
@@ -45,11 +45,12 @@ function FavItem({item}) {
                 position:relative;
                 flex-direction:column;
                 align-items:flex-start;
-                min-width:55vw;
+                min-width:50vw;
                 margin-bottom:2rem;
             }
             .card{
                 display:flex;
+                font-family: 'Poppins', sans-serif;
             }
             .img{
                 width:142px;
@@ -58,33 +59,48 @@ function FavItem({item}) {
             .side{
                 display:flex;
                 margin-top:24px;
-                margin-left:1rem;
+                margin-left:1.5rem;
                 flex-direction:column;
-                justify-content:space-around;
             }
             .desc,.price{
-                width:50%;
-                font-size:1rem;
-                font-family:GothamHTF-Book, sans-serif;
+                width:70%;
+                font-size: 15px;
+                font-weight:500;
+                line-height: 20px;
+            }
+            .brand,.color{
+                font-size:13px;
+                font-weight:400;
+            }
+            .brand{
+                margin-top:0.7rem;
+            }
+            .align{
+                display:inline-block;
+                width:5rem;
             }
             .buttons{
+                margin-top:1rem;
                 display:flex;
             }
             .buttons select,.buttons button{
+                
                 display:flex;
+                outline-style:none;
                 text-align:center;
-                padding:5px 0;
+                padding:5px 7px;
                 cursor:pointer;
                 min-width:9rem;
                 height:2.5rem;
-                font-weight:bold;
+                font-weight:300;
                 background:white;
-                margin-right:1.5rem;
+                margin-right:1rem;
                 color:grey;
-                font-size:12px;
+                font-size:14px;
                 justify-content:center;
                 transition:all 0.2s linear;
             }
+            
             .buttons button{
                 background:black;
                 color:white;
@@ -92,9 +108,8 @@ function FavItem({item}) {
             }
             .buttons button span{
                 margin-left:1rem;
-                font-size:16px;
-                font-family:GothamHTF-Book, sans-serif;
-                font-weight:bold;
+                font-size:17px;
+                font-weight:400;
                 padding-top: 2px;
                 background:black;
                 vertical-align:bottom;
@@ -110,9 +125,6 @@ function FavItem({item}) {
                 .item{
                     width:80vw;
                 }
-                .desc,.price{
-                    font-size:0.7rem;
-                }
                 .big{
                     display:none;
                 }
@@ -121,9 +133,11 @@ function FavItem({item}) {
                     width:100%;
                 }
                 .small select,.small button{
-                    margin-top:1rem;
-                    width:45%;
-                    min-width:7rem;
+                    width:50%;
+                    min-width:0;
+                }
+                .align{
+                    width:3.5rem;
                 }
             }
             .close{

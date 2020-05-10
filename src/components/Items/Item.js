@@ -31,7 +31,7 @@ const Item = ({item})=> {
                     </div>
             </div>
           </a>
-          <span className={fav?"active star":"star"} onClick={handleFavClick}><AiFillStar  size={20}/></span> 
+          <span className={fav?"active star":"star"} onClick={handleFavClick}><AiFillStar  size={22}/></span> 
         </div>
     <style jsx>{`
         .item {
@@ -55,7 +55,7 @@ const Item = ({item})=> {
             height:0;
             width:100%;
             opacity:0;
-            background:white;
+            background:rgb(250, 249, 248);
             z-index:5;
             transition: all 0.3s ease-in-out;
           }
@@ -81,9 +81,8 @@ const Item = ({item})=> {
             margin-right:1rem;
             color:grey;
           }
-          .active{
-            color:red;
-           
+          .star:hover,.active{
+            color:red;     
           }
           }
           .img-container {

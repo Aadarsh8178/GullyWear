@@ -94,8 +94,7 @@ const Navbar = ()=>{
       </nav>
       <SideDrawer 
         open={isOpen} 
-        handleToggle={toggledrawer} 
-        showLogin={showLogin} 
+        handleToggle={toggledrawer}  
         setShowLogin={setShowLogin}/>
       <style global jsx>{`
         .navbar {

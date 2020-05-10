@@ -78,6 +78,7 @@ export default [
       price:1500,
       featured:false,
       brand:"H&M",
+      color:'multiple',
       description:"white cotton shirt and denim",
       images:[
         {
@@ -143,6 +144,7 @@ export default [
       type:"Winter",
       slug:"Winter",
       occasion:"casual",
+      color:'multiple',
       price:3500,
       featured:true,
       brand:"H&M",
@@ -205,6 +207,7 @@ export default [
       type:"Winter",
       slug:"WinterCool",
       occasion:"casual",
+      color:'multiple',
       price:4400,
       featured:true,
       brand:"H&M",
@@ -288,6 +291,7 @@ export default [
       type:"Summer",
       occasion:"casual",
       slug:"Summer368",
+      color:'multiple',
       price:2500,
       description:"Simple but effective",
       featured:true,
@@ -339,6 +343,7 @@ export default [
       slug:"party234",
       price:14500,
       featured:true,
+      color:'multiple',
       brand:"H&M",
       description:"white cotton shirt and denim",
       images:[

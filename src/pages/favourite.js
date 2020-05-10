@@ -41,7 +41,7 @@ function favourite() {
     }
     return (
         <div className="favourites">
-            <h1 className="fav-heading">Favuorites</h1>
+            <p className="fav-heading">Favuorites</p>
             {favItems}
             <style jsx>{`
                 .favourites{
@@ -52,7 +52,9 @@ function favourite() {
                     align-items:center;
                 }
                 .fav-heading{
-                    font-family:GothamHTF-Book, sans-serif;
+                    font-family: 'Poppins', sans-serif;
+                    font-size:40px;
+                    font-weight:600;
                     margin:2rem 0;
                     margin-bottom:2rem;
                 }

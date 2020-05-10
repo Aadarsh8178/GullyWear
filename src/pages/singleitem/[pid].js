@@ -79,6 +79,7 @@ const SingleItem = ()=> {
                 cursor:pointer;
                 width:4rem;
                 background:white;
+                border: 1.5px solid black;
                 color:black;
                 font-size:15px;
                 justify-content:center;
@@ -128,15 +129,12 @@ const SingleItem = ()=> {
             </div>
         </div>
     <style jsx>{`
-        .singleitemMain{
-            background:#f5f5f7;
-          }
           .Align{
               display: flex;
               flex-wrap:wrap; 
               flex-direction:row;
               height:calc(100vh - 85px);
-              background:#f5f5f7;
+              background:rgb(250, 249, 248);
           }
           .sliderTop{
             position:relative;
