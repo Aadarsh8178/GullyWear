@@ -26,6 +26,7 @@ function index() {
       }
       .login-form{
         transition: height 0.3s ease-out;
+        margin:16px;
       }
       
       `}</style>

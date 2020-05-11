@@ -20,8 +20,11 @@ const initialState = {
     filterApplied:false,
     signedIn:false,
     favoriteLooks:[],
+    bagItems:[],
     NofavItems:0,
     NobagItems:0,
+    deliveryPrice:100,
+    freedelivery:1000
 }
 const formatData = (items,favoriteLooks)=>{
     let tempItems = items.map(item => {
@@ -124,11 +127,25 @@ const addtoFav = (state,look)=>{
         favoriteLooks:state.favoriteLooks.concat({id:look.slug,look:look})
     }
 }
+const addtoBag = (state,look,size)=>{   
+    return  {...state,
+        NobagItems:state.NobagItems+1,
+        bagItems:state.bagItems.concat({id:look.slug,look:look,size:size})
+    }
+}
 const removeFav = (state,look,id)=>{
+    console.log('called')
     look.fav=false;
     return {...state,
         NofavItems:state.NofavItems-1,
-        favoriteLooks:state.favoriteLooks.filter(look => look.id!=id)}
+        favoriteLooks:state.favoriteLooks.filter(look => look.id!==id)}
+}
+const removeFromBag = (state,id)=>{
+    return {
+        ...state,
+        NobagItems:state.NobagItems-1,
+        bagItems:state.bagItems.filter(look => look.id!==id)
+    }
 }
 const reducer = (state,action)=>{
     switch(action.type){
@@ -143,6 +160,8 @@ const reducer = (state,action)=>{
         case actionType.ADDTOFAV:return addtoFav(state,action.look)
         case actionType.REMOVEFAV:return removeFav(state,action.look,action.id)
         case actionType.SET_FAV:return {...state,favoriteLooks:action.payload}
+        case actionType.ADDTOBAG:return addtoBag(state,action.look,action.size)
+        case actionType.REMOVEFROMBAG:return removeFromBag(state,action.id)
         default: return state
     }
 }
@@ -202,7 +221,9 @@ const LookProvider = (props)=>{
         toggledrawer:()=>dispatch({type:actionType.TOGGLE_DRAWER}),
         closedrawer:()=>dispatch({type:actionType.CLOSE_DRAWER}),
         addtoFav: (look)=>dispatch({type:actionType.ADDTOFAV,look}),
-        removeFav: (look,id)=>dispatch({type:actionType.REMOVEFAV,look,id})
+        removeFav: (look,id)=>dispatch({type:actionType.REMOVEFAV,look,id}),
+        addtoBag:(look,size)=>dispatch({type:actionType.ADDTOBAG,look,size}),
+        removeFromBag:(id)=>dispatch({type:actionType.REMOVEFROMBAG,id})
         }}>
             {props.children}
         </LookContext.Provider>

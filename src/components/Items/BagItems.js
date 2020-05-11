@@ -1,37 +1,26 @@
-import React,{useContext, useState} from 'react';
-import Link from 'next/link';
+import React,{useContext,useState} from 'react';
 import {LookContext} from '../../store/context';
 
-import {FiShoppingBag} from "react-icons/fi";
+import {FiStar} from 'react-icons/fi';
 import {RiCloseLine} from 'react-icons/ri';
 import Dropdown from '../UI/Dropdown';
-import Modal from '../UI/Modal';
 
-function FavItem({item}) {
-    const {removeFav,addtoBag} = useContext(LookContext)
-    const {slug,images,price,description,brand,color,sizes}= item
-    const [size,setSize] = useState('Select Size')
-    const [showModal,setShowModal] = useState(false);
-    const handleBagClick = ({item,slug,size})=>{
-        if(size==='Select Size'){
-            setShowModal(true)
-            return;
-        }
-        removeFav(item,slug)
-        addtoBag(item,size)
+function BagItems({item,size,setTotalPrice}) {
+    const {removeFromBag,addtoFav} = useContext(LookContext)
+    const {slug,images,price,description,brand,color,qty}= item
+    const [bagprice,setBagPrice] = useState(price)
+    const [quantity,setQuantity] = useState(1)
+    const handleremoveFromBag = (slug)=>{
+        setTotalPrice(-bagprice)
+        removeFromBag(slug)
+    }
+    const handlesetQuantity = (curr)=>{
+        setQuantity(curr)
+        setTotalPrice((curr*price) - bagprice)
+        setBagPrice(curr*price)   
     }
     return (
         <div className="item">
-          <div onClick={()=>setShowModal(false)}>
-            <Modal show={showModal} modalClosed={()=>setShowModal(false)}>
-                <div style={{fontSize:'16px',
-                padding:'20px',
-                fontWeight:'400',
-                textAlign:'center'}}>
-                    Please select a size
-                </div>
-            </Modal>
-        </div>
           <div className="card">
             <a  href={`http://localhost:3000/singleitem/${slug}`}>
                     <img 
@@ -44,24 +33,26 @@ function FavItem({item}) {
                     <p className="desc">{description}</p>
                     <p className="price"><span>&#8377;</span>{price}</p>
                     <div className="small-details">
-                        <span className="align">Brand: </span><span>{brand}</span>
-                        <span className="align">Color: </span><span>{color}</span>
-                    </div>  
+                        <p><span>Brand:</span><span>{brand}</span></p>
+                        <p><span>Size:</span><span>{size}</span></p>
+                        <p><span>Color: </span><span>{color}</span></p>
+                        <p><span>Price:</span><span>{bagprice}</span></p>
+                    </div> 
                 </div>
                 <div className="buttons big">
+                    <button onClick={()=>{addtoFav(item);handleremoveFromBag(slug);}}><FiStar size={20}/></button>
                     <div className="dropdown">
-                        <Dropdown height={40} curr={size} setCurr={(curr) => setSize(curr)} options={['M','S','L','XL']}/>
+                        <Dropdown height={40} curr={quantity} setCurr={(curr) => handlesetQuantity(curr)} options={[...Array(qty-1).keys()].map(x => x = x+1)}/>
                     </div> 
-                    <button onClick={()=>handleBagClick({item,size,slug})}><FiShoppingBag size={20}/><span>Add</span></button>
                 </div>
             </div>
-             <span className="close" onClick={()=>removeFav(item,slug)}><RiCloseLine size={24}/></span>
+             <span className="close" onClick={()=>handleremoveFromBag(slug)}><RiCloseLine size={24}/></span>
           </div>
           <div className="buttons small">
-              <div className="dropdown">
-                <Dropdown height={40} curr={size} setCurr={(curr) => setSize(curr)} options={['M','S','L','XL']}/>
-              </div>
-              <button onClick={()=>handleBagClick({item,size,slug})}><FiShoppingBag size={20}/><span>Add</span></button>
+                <button onClick={()=>{addtoFav(item);handleremoveFromBag(slug);}}><FiStar size={20}/></button>
+                <div className="dropdown">
+                    <Dropdown height={40} curr={quantity} setCurr={(curr) => handlesetQuantity(curr)} options={[...Array(qty-1).keys()].map(x => x = x+1)}/>
+                </div> 
             </div>
           <style jsx>{`
             .item{
@@ -85,6 +76,10 @@ function FavItem({item}) {
                 margin-top:24px;
                 margin-left:1.5rem;
                 flex-direction:column;
+                width:40vw;
+            }
+            .details p{
+                text-align:left;
             }
             .desc,.price{
                 width:70%;
@@ -93,16 +88,25 @@ function FavItem({item}) {
                 line-height: 20px;
             }
             .small-details{
+                text-align:left;
                 display:flex;
                 flex-wrap:wrap;
-                max-width:10rem;
+                width:100%;
+                max-width:25rem;
                 margin-top:0.7rem;
                 font-size:13px;
                 font-weight:400;
             }
+            .small-details p{
+                min-width:12rem;
+            }
+            .small-details span{
+                display:inline-block;
+                width:50%;
+            }
             .align{
                 display:block;
-                min-width:5rem;
+                min-width:3rem;
             }
             .buttons{
                 margin-top:1rem;
@@ -187,4 +191,4 @@ function FavItem({item}) {
     )
 }
 
-export default FavItem
+export default BagItems

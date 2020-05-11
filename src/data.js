@@ -30,6 +30,7 @@ export default [
       occasion:"party",
       price:1500,
       featured:false,
+      qty:5,
       images:[
         {
           fields:{
@@ -80,6 +81,7 @@ export default [
       brand:"H&M",
       color:'multiple',
       description:"white cotton shirt and denim",
+      qty:7,
       images:[
         {
           fields:{
@@ -149,6 +151,7 @@ export default [
       featured:true,
       brand:"H&M",
       description:"white cotton shirt and denim",
+      qty:6,
       images:[
         {
           fields:{
@@ -212,6 +215,7 @@ export default [
       featured:true,
       brand:"H&M",
       description:"white cotton shirt and denim",
+      qty:9,
       images:[
         {
           fields:{
@@ -297,6 +301,7 @@ export default [
       featured:true,
       brand:"H&M",
       description:"white cotton shirt and denim",
+      qty:5,
       images:[
         {
           fields:{
@@ -346,6 +351,7 @@ export default [
       color:'multiple',
       brand:"H&M",
       description:"white cotton shirt and denim",
+      qty:5,
       images:[
         {
           fields:{

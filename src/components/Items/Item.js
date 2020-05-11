@@ -82,7 +82,7 @@ const Item = ({item})=> {
             color:grey;
           }
           .star:hover,.active{
-            color:red;     
+            color:rgb(145, 9, 9);     
           }
           }
           .img-container {

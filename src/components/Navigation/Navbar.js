@@ -59,7 +59,7 @@ const Navbar = ()=>{
                     className={search?"search-form showsf":"search-form"}
                   />
               <FiSearch size={20} className={search?"search":"search shows"} onClick={handleSearchToggle}/>
-              <a onClick={handleProfileClick} className="profile"><FiUser size={20} />
+              <a onClick={handleProfileClick} id="profile" className="profile"><FiUser size={20} />
                 <span className="profile-hover">Profile</span>
               </a>
               <Link href="/favourite"><a className="fav"><FiStar size={20} />

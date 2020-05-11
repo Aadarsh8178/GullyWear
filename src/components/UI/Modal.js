@@ -22,13 +22,13 @@ function Modal(props){
                     width: 70%;
                     border: 1px solid #ccc;
                     box-shadow: 1px 1px 1px black;
-                    padding: 16px;
+                    padding:0;
+                    margin:0;
                     left: 15%;
                     top: 20%;
                     box-sizing: border-box;
                     transition: all 0.3s ease-out;
                 }
-                
                 @media (min-width: 600px) {
                     .Modal {
                         width: 500px;

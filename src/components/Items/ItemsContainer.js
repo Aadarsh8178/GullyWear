@@ -29,12 +29,17 @@ const ItemsContainer = ({loading,sortedItems})=>{
                 padding-top:2px;
                 padding-bottom:12px;
                 z-index:11;    
+                transition:all 0.2s ease-in-out;
+            }
+            .filter:hover{
+                transition:all 0.2s ease-in-out;
+                background:white;
             }
             .filter p{
                 display:inline;
                 font-family:GothamHTF-Book, sans-serif;
                 color:rgb(70, 67, 67);
-                font-size:13px;
+                font-size:14px;
                 cursor:pointer;
                 transition: all 0.2s ease-in-out;
             }

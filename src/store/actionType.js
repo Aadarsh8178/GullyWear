@@ -10,3 +10,5 @@ export const FILTER_REMOVED = 'FILTER_REMOVED';
 export const ADDTOFAV = 'ADDTOFAV';
 export const REMOVEFAV = 'REMOVEFAV';
 export const SET_FAV = 'SET_FAV';
+export const ADDTOBAG = 'ADDTOBAG';
+export const REMOVEFROMBAG = 'REMOVEFROMBAG';
