@@ -11,7 +11,19 @@ const ItemsContainer = ({loading,sortedItems})=>{
     const {filterApplied} = useContext(LookContext);
 
     if(loading){
-        return <Loading/>
+        return (<div className="loading">
+            <Loading area={80}/>
+            <style jsx>{`
+                .loading{
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    width:100vw;
+                    height:80vh;
+                }
+                
+            `}</style>
+            </div>)
     }
     const handlechange = ()=>{
         setFilterShow(prev => !prev)

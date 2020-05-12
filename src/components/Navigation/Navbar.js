@@ -1,4 +1,4 @@
-import React,{useState,useContext} from 'react'
+import React,{useState,useContext, useEffect} from 'react'
 import Link from 'next/link'
 import {useRouter} from 'next/router';
 
@@ -8,12 +8,13 @@ import {FiSearch} from 'react-icons/fi'
 import {FiStar} from 'react-icons/fi'
 import {FiShoppingBag} from "react-icons/fi";
 
-import SideDrawer from './SideDrawer'
+import Modal from '../UI/Modal'
 import Backdrop from '../UI/Backdrop'
+import Loading from '../UI/Loading'
+import SideDrawer from './SideDrawer'
 import logo from '../../../public/static/images/logo.png'
 import {LookContext} from '../../store/context'
 
-import Modal from '../UI/Modal'
 import Login from '../Login/index'
 
 const Navbar = ()=>{
@@ -23,6 +24,7 @@ const Navbar = ()=>{
   const [search,setSearch] = useState(false)
   const [showLogin,setShowLogin] = useState(false)
   const [searchInput,setSearchInput] = useState("")
+  
   const handleChange = event => {
     setSearchInput(event.target.value)
   };
@@ -45,6 +47,7 @@ const Navbar = ()=>{
       <Modal show={showLogin} modalClosed={closeModal}><Login/></Modal>
       <Backdrop open={isOpen} onclick={toggledrawer}></Backdrop>
       <nav className="navbar">
+          <div id="loading"><Loading area={15} ball={5} base={5} gap={11}/></div>
           <div className="nav-header">
             <button type="button" className="nav-btn" onClick={toggledrawer}>
               <FaAlignLeft size={25} className="nav-icon"/>
@@ -105,6 +108,14 @@ const Navbar = ()=>{
           padding: 0.1rem 0;
           background: white;
           z-index: 100;
+        }
+        #loading{
+          display:none;
+          position:absolute;
+          top:2rem;
+          right:0;
+          margin-right:2.5rem;
+          z-index:1000;
         }
         .nav-header{
           display:grid;
@@ -202,6 +213,9 @@ const Navbar = ()=>{
           width:180px;
         }
         @media screen and (max-width:768px){
+          #loading{
+            top:0.7rem;
+          }
           .search-form{
             position:fixed;
             z-index:12;

@@ -12,7 +12,7 @@ function BagItems({item,size,setTotalPrice}) {
     const [quantity,setQuantity] = useState(1)
     const handleremoveFromBag = (slug)=>{
         setTotalPrice(-bagprice)
-        removeFromBag(slug)
+        removeFromBag(slug,size)
     }
     const handlesetQuantity = (curr)=>{
         setQuantity(curr)
@@ -36,7 +36,7 @@ function BagItems({item,size,setTotalPrice}) {
                         <p><span>Brand:</span><span>{brand}</span></p>
                         <p><span>Size:</span><span>{size}</span></p>
                         <p><span>Color: </span><span>{color}</span></p>
-                        <p><span>Price:</span><span>{bagprice}</span></p>
+                        <p><span>Price:</span><span style={{fontWeight:"600"}}>{bagprice}</span></p>
                     </div> 
                 </div>
                 <div className="buttons big">
@@ -66,6 +66,9 @@ function BagItems({item,size,setTotalPrice}) {
             .card{
                 display:flex;
                 font-family: 'Poppins', sans-serif;
+            }
+            .card a{
+                align-self:flex-end;
             }
             .img{
                 width:142px;
@@ -118,7 +121,6 @@ function BagItems({item,size,setTotalPrice}) {
                 font-size:14px;
                 color:grey;
                 text-align:center;
-                margin-right:1rem;
                 transition: all .2s ease-in-out;
             }
             .buttons button{ 
@@ -153,9 +155,6 @@ function BagItems({item,size,setTotalPrice}) {
                 .img{
                     width:101px;
                     height:151.5px;
-                }
-                .item{
-                    width:80vw;
                 }
                 .big{
                     display:none;

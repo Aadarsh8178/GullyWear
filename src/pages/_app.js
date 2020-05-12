@@ -1,8 +1,14 @@
 import React from 'react';
 import App from 'next/app';
-
+import Router from 'next/router'
 import Navbar from '../components/Navigation/Navbar'
 import {LookProvider} from '../store/context'
+
+Router.onRouteChangeStart = url => {
+  document.getElementById('loading').style.display = 'inline'
+}
+Router.onRouteChangeComplete = () => document.getElementById('loading').style.display = 'none';
+Router.onRouteChangeError = () => document.getElementById('loading').style.display = 'none';
 
 class MyApp extends App {
   render() {

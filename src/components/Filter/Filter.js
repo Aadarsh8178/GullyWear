@@ -29,7 +29,7 @@ function LooksFilter() {
           </div>
           <div className="sort">
             <p onClick={()=>handleChange("low-high")}>Price-Low-High  </p>
-            <p onClick={()=>handleChange("high-low")}>PriceHigh-Low</p> 
+            <p onClick={()=>handleChange("high-low")}>Price-High-Low</p> 
             <a href={window.location.href}><p>Reset</p></a>
           </div>
              

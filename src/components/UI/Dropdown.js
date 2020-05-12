@@ -3,23 +3,19 @@ import {IoIosArrowDown,IoIosArrowUp} from 'react-icons/io'
 
 function Dropdown({curr,setCurr,options,height}) { 
     const [dir,setDir] = useState(false) //false means down arrow
-    const selectOptionHandler = (option)=>{
-        setDir(false)
-        setCurr(option)
-    }
     let totalHeight=0;
     if(options){
         totalHeight = height * options.length
     }
     return (
         <div className="dropdown">
-            <div className="select">
+            <div className="select"  onClick={()=> setDir(prev => !prev)}>
                 <span>{curr}</span>
-                <span className="arrow" onClick={()=> setDir(prev => !prev)}>
+                <span className="arrow">
                     {dir?<IoIosArrowUp size={16}/>:<IoIosArrowDown size={16}/>}
                 </span>
                 <ul className={dir?"dropdown-menu show":"dropdown-menu"}>
-                    {options?options.map(op => <li key={op} onClick={()=> selectOptionHandler(op)}>{op}</li>):null}
+                    {options?options.map(op => <li key={op} onClick={()=> setCurr(op)}>{op}</li>):null}
                 </ul>
             </div> 
             <style jsx>{`

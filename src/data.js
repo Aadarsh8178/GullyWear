@@ -26,7 +26,7 @@ export default [
     },
     fields:{
       type:"Main",
-      slug:"Summer",
+      slug:"MAIN",
       occasion:"party",
       price:1500,
       featured:false,

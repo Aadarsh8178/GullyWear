@@ -12,7 +12,7 @@ function bag() {
     useEffect(()=>{
          let NewbagArticles = bagItems.map((item)=>{
             initprice = initprice + item.look.price
-            return <Item key={item.id} 
+            return <Item key={item.id+item.size} 
                     item={item.look} 
                     size={item.size}  
                     setTotalPrice={(newprice)=>setTotalPrice(prev => prev + newprice)}/>
@@ -115,7 +115,7 @@ function bag() {
                     font-size:40px;
                     font-weight:600;
                     margin:2rem 0;
-                    margin-bottom:2rem;
+                    margin-bottom:3rem;
                 }
                 .bag-content{
                     display:flex;
@@ -212,6 +212,7 @@ function bag() {
                         width:90vw;
                     }
                     .cart-items{
+                        padding-left:1rem;
                         margin-right:0;
                         margin-bottom:0;
                         width:90vw;

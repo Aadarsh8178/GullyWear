@@ -26,7 +26,19 @@ const SingleItem = ()=> {
         return (<div>Not Found</div>)
     }
     if(loading){
-        return <Loading/>
+      return (<div className="loading">
+          <Loading area={80}/>
+          <style jsx>{`
+              .loading{
+                  display:flex;
+                  align-items:center;
+                  justify-content:center;
+                  width:100vw;
+                  height:80vh;
+              }
+              
+          `}</style>
+          </div>)
     }
     
     const images = item.images.map(img=>{

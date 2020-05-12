@@ -15,13 +15,15 @@ const Featured = ()=>{
         <>
         <section className="items">
             <Title title="featured"/>
+            {loading?<div><Loading/></div>:
             <div className="items-center">
-                {loading?<Loading/>:items}
-            </div>
+                {items}
+            </div>}
+            
         </section>
     <style jsx>{`
-        items {
-            padding: 10rem 0;
+          .items {
+            text-align:center;
           }
           .items-center {
             width:100%;

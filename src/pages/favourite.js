@@ -5,8 +5,8 @@ import Item from '../components/Items/FavItem'
 
 function favourite() {
     const Router = useRouter()
-    const {favoriteLooks} = useContext(LookContext)
-    let favItems = favoriteLooks.map((item)=>{
+    const {favouriteLooks} = useContext(LookContext)
+    let favItems = favouriteLooks.map((item)=>{
         return <Item item={item.look} key={item.id}/>
     })
     if(favItems.length===0){

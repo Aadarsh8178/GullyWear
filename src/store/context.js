@@ -19,14 +19,14 @@ const initialState = {
     sidedrawer:false,
     filterApplied:false,
     signedIn:false,
-    favoriteLooks:[],
+    favouriteLooks:[],
     bagItems:[],
     NofavItems:0,
     NobagItems:0,
     deliveryPrice:100,
     freedelivery:1000
 }
-const formatData = (items,favoriteLooks)=>{
+const formatData = (items,favouriteLooks)=>{
     let tempItems = items.map(item => {
         let id = item.sys.id;
         let images = item.fields.images.map(image => {
@@ -39,7 +39,7 @@ const formatData = (items,favoriteLooks)=>{
             }
             return img
         })
-        let look = {...item.fields,images,id,fav:Boolean(favoriteLooks.find(look => look.id===slug))};
+        let look = {...item.fields,images,id,fav:Boolean(favouriteLooks.find(look => look.id===slug))};
         return look
     })
     return tempItems   
@@ -59,11 +59,6 @@ const handleSort = (state,name) =>{
             hightolow:false
         }
     }
-}
-const fetchFav = ()=>{
-    //Implement fetching of favuorite items from server,, Ids are fetched then corresponding look data 
-    // added to temp array returned
-    return []
 }
 const filterLooks = (state)=>{
     let {
@@ -122,29 +117,50 @@ const filterLooks = (state)=>{
 }
 const addtoFav = (state,look)=>{   
     look.fav=true;
+    let prevfav = JSON.parse(localStorage.getItem('favourites')||'[]')
+    prevfav.push(look.slug)
+    localStorage.setItem('favourites',JSON.stringify(prevfav))
     return {...state,
         NofavItems:state.NofavItems+1,
-        favoriteLooks:state.favoriteLooks.concat({id:look.slug,look:look})
+        favouriteLooks:state.favouriteLooks.concat({id:look.slug,look:look})
     }
 }
-const addtoBag = (state,look,size)=>{   
+const addtoBag = (state,look,size)=>{  
+    let found = state.bagItems.find(item => item.id===look.slug&&item.size===size)
+    if(found){
+        return {...state};
+    }
+
+    let prevbag = JSON.parse(localStorage.getItem('bagItems')||'[]')
+    prevbag.push({slug:look.slug,size:size})
+    localStorage.setItem('bagItems',JSON.stringify(prevbag));
     return  {...state,
         NobagItems:state.NobagItems+1,
         bagItems:state.bagItems.concat({id:look.slug,look:look,size:size})
     }
 }
 const removeFav = (state,look,id)=>{
-    console.log('called')
     look.fav=false;
+    let prevfav = JSON.parse(localStorage.getItem('favourites')||'[]')
+    let newfav = prevfav.filter(slug => slug!==id)
+    localStorage.setItem('favourites',JSON.stringify(newfav))
     return {...state,
         NofavItems:state.NofavItems-1,
-        favoriteLooks:state.favoriteLooks.filter(look => look.id!==id)}
+        favouriteLooks:state.favouriteLooks.filter(look => look.id!==id)}
 }
-const removeFromBag = (state,id)=>{
+const removeFromBag = (state,id,size)=>{
+    let prevbag = JSON.parse(localStorage.getItem('bagItems')||'[]')
+    let newbag = prevbag.filter(item => item.slug!==id)
+    localStorage.setItem('bagItems',JSON.stringify(newbag)) 
     return {
         ...state,
         NobagItems:state.NobagItems-1,
-        bagItems:state.bagItems.filter(look => look.id!==id)
+        bagItems:state.bagItems.filter(look => {
+            if(look.id===id&&look.size===size){
+                return false;
+            }
+            return true;
+        })
     }
 }
 const reducer = (state,action)=>{
@@ -159,9 +175,10 @@ const reducer = (state,action)=>{
         case actionType.FILTER_REMOVED:return{...state,filterApplied:false}
         case actionType.ADDTOFAV:return addtoFav(state,action.look)
         case actionType.REMOVEFAV:return removeFav(state,action.look,action.id)
-        case actionType.SET_FAV:return {...state,favoriteLooks:action.payload}
         case actionType.ADDTOBAG:return addtoBag(state,action.look,action.size)
-        case actionType.REMOVEFROMBAG:return removeFromBag(state,action.id)
+        case actionType.REMOVEFROMBAG:return removeFromBag(state,action.id,action.size)
+        case actionType.AUTOFETCHFAVBAG:return {...state,NobagItems:action.bag.length,NofavItems:action.fav.length,favouriteLooks:action.fav,bagItems:action.bag}
+        case actionType.SETFAVONLOOKS:return {...state,looks:action.looks}
         default: return state
     }
 }
@@ -171,14 +188,11 @@ const LookProvider = (props)=>{
 
     useEffect(()=>{
         (async function(){
-            let favLoooks = await fetchFav()
-            await dispatch({type:actionType.SET_FAV,payload:favLoooks})
-            let looks = await formatData(items,state.favoriteLooks);
+            let looks = await formatData(items,state.favouriteLooks);
             let featuredLooks = looks.filter(look => look.featured===true)
             let mainpage = looks.find(look => look.type==="Main")
             let maxPrice = Math.max(...looks.map(item => item.price))
             let minPrice = Math.min(...looks.map(item => item.price))
-            
             const addProp = {
                 looks,
                 sortedLooks:looks,
@@ -187,13 +201,42 @@ const LookProvider = (props)=>{
                 price:maxPrice,
                 maxPrice,
                 minPrice,
-                mainpage
+                mainpage,
             }
-            
+            autofetchBagFav(looks)
             dispatch({type:actionType.INIT_SETUP,newState:addProp});
         }())
     },[])
-
+    const autofetchFav = (looks)=>{
+        let favs = JSON.parse(localStorage.getItem('favourites')||'[]')
+        let initfav = []
+        favs.map( slug =>{
+            let cur = looks.find(look => look.slug===slug)
+            if(cur){
+                cur.fav=true 
+                initfav.push({id:cur.slug,look:cur})
+            }
+        })
+        
+        return initfav
+    }
+    const autofetchBag = (looks)=>{
+        let bag = JSON.parse(localStorage.getItem('bagItems')||'[]')
+        
+        let initbag = []
+        bag.map( baglook =>{
+            let cur = looks.find(look => look.slug===baglook.slug)
+            if(cur){
+                initbag.push({id:cur.slug,look:cur,size:baglook.size})
+            }
+        })
+        return initbag
+    }
+    const autofetchBagFav=(looks)=>{
+        const fav = autofetchFav(looks)
+        const bag = autofetchBag(looks)
+        dispatch({type:actionType.AUTOFETCHFAVBAG,fav,bag})
+    }
     const getLook = (slug)=>{
         let tempLooks = [...state.looks];
         const look = tempLooks.find(look => look.slug===slug)
@@ -223,7 +266,8 @@ const LookProvider = (props)=>{
         addtoFav: (look)=>dispatch({type:actionType.ADDTOFAV,look}),
         removeFav: (look,id)=>dispatch({type:actionType.REMOVEFAV,look,id}),
         addtoBag:(look,size)=>dispatch({type:actionType.ADDTOBAG,look,size}),
-        removeFromBag:(id)=>dispatch({type:actionType.REMOVEFROMBAG,id})
+        removeFromBag:(id,size)=>dispatch({type:actionType.REMOVEFROMBAG,id,size}),
+        autofetchBagFav:(looks) =>autofetchBagFav(looks)
         }}>
             {props.children}
         </LookContext.Provider>
