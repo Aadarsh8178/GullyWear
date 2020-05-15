@@ -51,7 +51,7 @@ function Dropdown({curr,setCurr,options,height}) {
                     position:absolute;
                     display:flex;
                     align-items:center;
-                    z-index:100;
+                    z-index:2;
                     top:0;
                     right:0;
                     width: 16px;

@@ -5,7 +5,15 @@ import {FiStar} from 'react-icons/fi';
 import {RiCloseLine} from 'react-icons/ri';
 import Dropdown from '../UI/Dropdown';
 
-function BagItems({item,size,setTotalPrice}) {
+function BagItems({item,size,setTotalPrice,hover}) {
+    let display = "block"
+    let flex="flex"
+    let margin="2rem"
+    if(hover){
+        display="none"
+        flex="none"
+        margin="0.8rem"
+    }
     const {removeFromBag,addtoFav} = useContext(LookContext)
     const {slug,images,price,description,brand,color,qty}= item
     const [bagprice,setBagPrice] = useState(price)
@@ -60,11 +68,12 @@ function BagItems({item,size,setTotalPrice}) {
                 position:relative;
                 flex-direction:column;
                 align-items:flex-start;
-                min-width:50vw;
-                margin-bottom:2rem;
+                min-width:50%;
+                margin-bottom:${margin}; 
             }
             .card{
                 display:flex;
+                width:100%;
                 font-family: 'Poppins', sans-serif;
             }
             .card a{
@@ -79,13 +88,13 @@ function BagItems({item,size,setTotalPrice}) {
                 margin-top:24px;
                 margin-left:1.5rem;
                 flex-direction:column;
-                width:40vw;
+                width:50%;
             }
             .details p{
                 text-align:left;
             }
             .desc,.price{
-                width:70%;
+                width:100%;
                 font-size: 15px;
                 font-weight:500;
                 line-height: 20px;
@@ -113,7 +122,7 @@ function BagItems({item,size,setTotalPrice}) {
             }
             .buttons{
                 margin-top:1rem;
-                display:flex;
+                display:${flex};
             }
             .dropdown{
                 min-width:9rem;
@@ -136,10 +145,14 @@ function BagItems({item,size,setTotalPrice}) {
                 font-size:14px;
                 justify-content:center;
                 transition:all 0.2s linear;
+                background:white;
+                color:black;
+                border:0;
+            } 
+            .buttons button:hover{
                 background:black;
                 color:white;
-                border:0;
-            }   
+            }  
             .buttons button span{
                 margin-left:1rem;
                 font-size:17px;
@@ -160,7 +173,7 @@ function BagItems({item,size,setTotalPrice}) {
                     display:none;
                 }
                 .small{
-                    display:flex;
+                    display:${flex};
                     width:100%;
                 }
                 .dropdown,.small button{
@@ -172,6 +185,7 @@ function BagItems({item,size,setTotalPrice}) {
                 }
             }
             .close{
+                display:${display};
                 position:absolute;
                 right:0;
                 top:0;
@@ -183,7 +197,6 @@ function BagItems({item,size,setTotalPrice}) {
             .close:hover{
                 transition:all 0.2s linear;
                 color:black;
-
             }
           `}</style>
         </div>

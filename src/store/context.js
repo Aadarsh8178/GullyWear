@@ -24,7 +24,8 @@ const initialState = {
     NofavItems:0,
     NobagItems:0,
     deliveryPrice:100,
-    freedelivery:1000
+    freedelivery:1000,
+    totalPrice:0
 }
 const formatData = (items,favouriteLooks)=>{
     let tempItems = items.map(item => {
@@ -116,6 +117,12 @@ const filterLooks = (state)=>{
     }
 }
 const addtoFav = (state,look)=>{   
+    let found = state.favouriteLooks.find(lk => lk.id===look.slug)
+    if(found){
+        return{
+            ...state
+        }
+    }
     look.fav=true;
     let prevfav = JSON.parse(localStorage.getItem('favourites')||'[]')
     prevfav.push(look.slug)
@@ -150,7 +157,12 @@ const removeFav = (state,look,id)=>{
 }
 const removeFromBag = (state,id,size)=>{
     let prevbag = JSON.parse(localStorage.getItem('bagItems')||'[]')
-    let newbag = prevbag.filter(item => item.slug!==id)
+    let newbag = prevbag.filter(item => {
+        if(item.slug===id&&item.size===size){
+            return false
+        }
+        return true
+    })
     localStorage.setItem('bagItems',JSON.stringify(newbag)) 
     return {
         ...state,

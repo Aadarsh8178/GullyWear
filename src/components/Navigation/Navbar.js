@@ -12,6 +12,7 @@ import Modal from '../UI/Modal'
 import Backdrop from '../UI/Backdrop'
 import Loading from '../UI/Loading'
 import SideDrawer from './SideDrawer'
+import Bag from '../../pages/bag'
 import logo from '../../../public/static/images/logo.png'
 import {LookContext} from '../../store/context'
 
@@ -70,7 +71,7 @@ const Navbar = ()=>{
               </a></Link>
               <span className="favn">{NofavItems}</span>
               <Link href="/bag"><a className="bag"><FiShoppingBag size={20}/>
-              <span className="bag-hover">Bag</span>
+              <div className="bag-hover"><Bag hover={true}/></div>
               </a></Link>
               <span className="bagn">{NobagItems}</span>
             </div>
@@ -141,7 +142,7 @@ const Navbar = ()=>{
             grid-template-areas:"search profile fav favn bag bagn";               
           }
         }
-        .profile-hover,.bag-hover,.fav-hover{
+        .profile-hover,.fav-hover{
           display:none;
           position:absolute;
           height:1.5rem;
@@ -175,12 +176,25 @@ const Navbar = ()=>{
           position:relative;
         }
         .bag:hover .bag-hover{
-          display:block;
+          height:400px;
+          transition: all 0.2s linear;
+        }
+        .bag-hover{
+          overflow:hidden;
+          text-decoration:none;
+          position:absolute;
+          background:white;
+          z-index:10000;
+          top:1.5rem;
+          right:0;
+          transform:translate(8%,0);
+          width:350px;
+          height:0;
+          transition: all 0.2s linear;
         }
         .bagn{
           grid-area:bagn;
         }
-        
         .search{
           position:relative;
           opacity:0;

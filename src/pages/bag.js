@@ -2,7 +2,17 @@ import React, { useState,useContext, useEffect } from 'react';
 
 import Item from '../components/Items/BagItems';
 import {LookContext} from '../store/context'
-function bag() {
+function bag(props) {
+    let hover=false
+    let display="block"
+    let checkoutwidth = "0"
+    let cartitems=""
+    if(props.hover){
+        hover = true
+        display="none"
+        checkoutwidth = "100%"
+        cartitems = "height:55%;min-width:${checkoutwidth};overflow-y:scroll;overflow-x:hidden;margin-right:0;padding:1rem;"
+    }
     let {bagItems,deliveryPrice,freedelivery} = useContext(LookContext)
     const [code,setCode] = useState('')
     const [bagArticles,setBagArticles] = useState([])
@@ -15,7 +25,8 @@ function bag() {
             return <Item key={item.id+item.size} 
                     item={item.look} 
                     size={item.size}  
-                    setTotalPrice={(newprice)=>setTotalPrice(prev => prev + newprice)}/>
+                    setTotalPrice={(newprice)=>setTotalPrice(prev => prev + newprice)}
+                    hover={hover}/>
         })
         setBagArticles(NewbagArticles)
         if(initprice>freedelivery){
@@ -110,8 +121,11 @@ function bag() {
                     text-align:center;
                     font-family: 'Poppins', sans-serif;
                     font-size:14px;
+                    width:100%;
+                    height:100%;
                 }
                 .bag-heading{
+                    display:${display};
                     font-size:40px;
                     font-weight:600;
                     margin:2rem 0;
@@ -122,18 +136,34 @@ function bag() {
                     justify-content:center;
                     align-items:flex-start;
                     flex-wrap:wrap;
+                    width:100%;
+                    height:100%;
                 }
                 .cart-items{
                     margin-right:1.5rem;
+                    ${cartitems}
+                }
+                .cart-items::-webkit-scrollbar {
+                    width: 4px;
+                }
+                
+                .cart-items::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);     
+                }
+                
+                .cart-items::-webkit-scrollbar-thumb {
+                    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
                 }
                 .checkout-container{
-                    padding:2rem;
+                    padding:1rem;
                     background:white;
                     display:flex;
                     flex-direction:column;
-                    width:28vw;
+                    width:28%;
+                    min-width:${checkoutwidth}
                 }
                 .discount{
+                    display:${display};
                     font-size:14px;
                     font-weight:300;
                     text-align:left;
@@ -209,13 +239,13 @@ function bag() {
                     .checkout-container{
                         margin-top:0;
                         padding:1rem;
-                        width:90vw;
+                        min-width:90%;
                     }
                     .cart-items{
                         padding-left:1rem;
                         margin-right:0;
                         margin-bottom:0;
-                        width:90vw;
+                        min-width:90%;
                     }
                 }
                 @media screen and (max-width:768px){
