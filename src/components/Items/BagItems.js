@@ -5,14 +5,18 @@ import {FiStar} from 'react-icons/fi';
 import {RiCloseLine} from 'react-icons/ri';
 import Dropdown from '../UI/Dropdown';
 
-function BagItems({item,size,setTotalPrice,hover}) {
+function BagItems({item,size,setTotalPrice,hover,notification}) {
     let display = "block"
     let flex="flex"
     let margin="2rem"
+    let img="width:142px;height:213px;"
     if(hover){
         display="none"
         flex="none"
         margin="0.8rem"
+    }
+    if(notification){
+        img = "width:101px;height:151.5px;" 
     }
     const {removeFromBag,addtoFav} = useContext(LookContext)
     const {slug,images,price,description,brand,color,qty}= item
@@ -80,8 +84,7 @@ function BagItems({item,size,setTotalPrice,hover}) {
                 align-self:flex-end;
             }
             .img{
-                width:142px;
-                height:213px;
+                ${img}
             }
             .side{
                 display:flex;

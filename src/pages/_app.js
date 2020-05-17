@@ -1,8 +1,9 @@
 import React from 'react';
-import App from 'next/app';
+import App, { Container } from 'next/app';
 import Router from 'next/router'
 import Navbar from '../components/Navigation/Navbar'
 import {LookProvider} from '../store/context'
+import { PageTransition } from 'next-page-transitions'
 
 Router.onRouteChangeStart = url => {
   document.getElementById('loading').style.display = 'inline'
@@ -14,9 +15,12 @@ class MyApp extends App {
   render() {
     const { Component, pageProps,router } = this.props;
 
-    return (<LookProvider>
-      <Navbar/>
-       <Component {...pageProps} key={router.route}/>
+    return (
+      <LookProvider>
+        <Navbar/>
+        <PageTransition timeout={300} classNames="page-transition">
+          <Component {...pageProps} key={router.route}/>
+        </PageTransition> 
     <style jsx global>{`
     * {
       margin: 0;
@@ -30,6 +34,20 @@ class MyApp extends App {
       background: rgb(250, 249, 248);
       font-family: Verdana, Geneva, Tahoma, sans-serif;
       line-height: 1.4;
+    }
+    .page-transition-enter {
+      transform:translateY(10%);
+    }
+    .page-transition-enter-active {
+      transform:translateY(0);
+      transition: all 300ms;
+    }
+    .page-transition-exit {
+      opacity:0;
+    }
+    .page-transition-exit-active {
+      opacity:0;
+      transition: all 0;
     }
     .btn-primary {
       display: inline-block;

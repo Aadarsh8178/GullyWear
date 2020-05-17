@@ -25,7 +25,8 @@ const initialState = {
     NobagItems:0,
     deliveryPrice:100,
     freedelivery:1000,
-    totalPrice:0
+    totalPrice:0,
+    bagNotification:false
 }
 const formatData = (items,favouriteLooks)=>{
     let tempItems = items.map(item => {
@@ -137,7 +138,6 @@ const addtoBag = (state,look,size)=>{
     if(found){
         return {...state};
     }
-
     let prevbag = JSON.parse(localStorage.getItem('bagItems')||'[]')
     prevbag.push({slug:look.slug,size:size})
     localStorage.setItem('bagItems',JSON.stringify(prevbag));
@@ -191,6 +191,8 @@ const reducer = (state,action)=>{
         case actionType.REMOVEFROMBAG:return removeFromBag(state,action.id,action.size)
         case actionType.AUTOFETCHFAVBAG:return {...state,NobagItems:action.bag.length,NofavItems:action.fav.length,favouriteLooks:action.fav,bagItems:action.bag}
         case actionType.SETFAVONLOOKS:return {...state,looks:action.looks}
+        case actionType.BAGNOTIFICATION:return {...state,bagNotification:true}
+        case actionType.BAGNOTIFICATIOFF:return {...state,bagNotification:false}
         default: return state
     }
 }
@@ -277,7 +279,11 @@ const LookProvider = (props)=>{
         closedrawer:()=>dispatch({type:actionType.CLOSE_DRAWER}),
         addtoFav: (look)=>dispatch({type:actionType.ADDTOFAV,look}),
         removeFav: (look,id)=>dispatch({type:actionType.REMOVEFAV,look,id}),
-        addtoBag:(look,size)=>dispatch({type:actionType.ADDTOBAG,look,size}),
+        addtoBag:(look,size)=>{ 
+            dispatch({type:actionType.BAGNOTIFICATION});
+            setTimeout(()=>dispatch({type:actionType.BAGNOTIFICATIOFF}),2000)
+            return dispatch({type:actionType.ADDTOBAG,look,size})
+        },
         removeFromBag:(id,size)=>dispatch({type:actionType.REMOVEFROMBAG,id,size}),
         autofetchBagFav:(looks) =>autofetchBagFav(looks)
         }}>

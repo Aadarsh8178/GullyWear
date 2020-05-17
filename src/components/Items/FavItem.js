@@ -18,7 +18,7 @@ function FavItem({item}) {
             return;
         }
         removeFav(item,slug)
-        addtoBag(item,size)
+        addtoBag(item,size,1)
     }
     return (
         <div className="item">

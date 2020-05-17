@@ -6,22 +6,23 @@ import {FaAlignLeft} from 'react-icons/fa'
 import {FiUser} from 'react-icons/fi'
 import {FiSearch} from 'react-icons/fi'
 import {FiStar} from 'react-icons/fi'
+import {BsBag} from 'react-icons/bs'
 import {FiShoppingBag} from "react-icons/fi";
-
+import {FcLinux as Logo} from 'react-icons/fc'
 import Modal from '../UI/Modal'
 import Backdrop from '../UI/Backdrop'
 import Loading from '../UI/Loading'
 import SideDrawer from './SideDrawer'
 import Bag from '../../pages/bag'
-import logo from '../../../public/static/images/logo.png'
 import {LookContext} from '../../store/context'
-
+import BagItem from '../Items/BagItems'
 import Login from '../Login/index'
 
 const Navbar = ()=>{
   const Router = useRouter();
   const context = useContext(LookContext)
-  const {signedIn,NofavItems,NobagItems} = context
+  const {signedIn,NofavItems,NobagItems,bagItems,bagNotification} = context
+  
   const [search,setSearch] = useState(false)
   const [showLogin,setShowLogin] = useState(false)
   const [searchInput,setSearchInput] = useState("")
@@ -53,7 +54,7 @@ const Navbar = ()=>{
             <button type="button" className="nav-btn" onClick={toggledrawer}>
               <FaAlignLeft size={25} className="nav-icon"/>
             </button>
-            <Link href="/"><a><img src={logo} className="logo" onClick={closedrawer}/></a></Link>
+            <Link href="/"><a><Logo className="logo" onClick={closedrawer}/></a></Link>
             <div className="nav-items">
             <input
                     type="text"
@@ -71,7 +72,7 @@ const Navbar = ()=>{
               </a></Link>
               <span className="favn">{NofavItems}</span>
               <Link href="/bag"><a className="bag"><FiShoppingBag size={20}/>
-              <div className="bag-hover"><Bag hover={true}/></div>
+              {NobagItems===0?<span className="empty-bag-hover">Bag</span>:<div className="bag-hover"><Bag hover={true}/></div>}
               </a></Link>
               <span className="bagn">{NobagItems}</span>
             </div>
@@ -95,6 +96,17 @@ const Navbar = ()=>{
               </li>
             </ul>
           </div> 
+          <div className={bagNotification?"bagNotification on":"bagNotification"} onClick={()=>Router.push('/bag')}>
+            {bagNotification?
+            <>
+            <p className="notification-title"><span>Shopping Bag</span><BsBag style={{marginRight:"1rem"}} size={20}/></p>
+            <BagItem
+              hover={true}
+              notification={true}
+              item={bagItems[bagItems.length - 1].look} 
+              size={bagItems[bagItems.length - 1].size}  
+              setTotalPrice={()=>{}}/></>:null}
+          </div>
       </nav>
       <SideDrawer 
         open={isOpen} 
@@ -107,7 +119,7 @@ const Navbar = ()=>{
           left: 0;
           width: 100%;
           padding: 0.1rem 0;
-          background: white;
+          background: rgb(250, 249, 248);
           z-index: 100;
         }
         #loading{
@@ -142,7 +154,7 @@ const Navbar = ()=>{
             grid-template-areas:"search profile fav favn bag bagn";               
           }
         }
-        .profile-hover,.fav-hover{
+        .profile-hover,.fav-hover,.empty-bag-hover{
           display:none;
           position:absolute;
           height:1.5rem;
@@ -175,9 +187,11 @@ const Navbar = ()=>{
           grid-area:bag;
           position:relative;
         }
-        .bag:hover .bag-hover{
+        .bag:hover .empty-bag-hover{
+          display:block;
+        }
+        .bag:not(:focus):hover .bag-hover{
           height:400px;
-          transition: all 0.2s linear;
         }
         .bag-hover{
           overflow:hidden;
@@ -190,11 +204,46 @@ const Navbar = ()=>{
           transform:translate(8%,0);
           width:350px;
           height:0;
-          transition: all 0.2s linear;
+          transition: all 0.2s ease-in-out;
         }
         .bagn{
           grid-area:bagn;
         }
+        .bagNotification{
+          width:400px;
+          height:230px;
+          opacity:0;
+          position:absolute;
+          top:3rem;
+          right:0;
+          background:white;
+          z-index:100;
+          padding:0.8rem;
+          padding-bottom:0;
+          cursor:pointer;
+          transition: all 0.2s ease-in-out;
+          transform:translateX(100%);
+        }
+        .on{
+          opacity:1;
+          transform:translateX(0);
+          transition: all 0.4s ease-in-out;
+        }
+        .notification-title{
+          width:100%;
+          display:flex;
+          justify-content:flex-end;
+          margin:0.7rem;
+          align-items:center;
+          font-size:20px;
+          font-weight:600;
+          font-family: 'Poppins', sans-serif;
+          
+        }
+        .notification-title span{
+          margin-right:1rem;
+        }
+        
         .search{
           position:relative;
           opacity:0;
@@ -273,7 +322,7 @@ const Navbar = ()=>{
         }
         
         .logo{
-          padding:0.2rem;
+          padding:0.3rem;
           height:50px;
           width:50px;
         }
