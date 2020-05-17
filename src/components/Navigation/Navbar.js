@@ -71,9 +71,9 @@ const Navbar = ()=>{
                 <span className="fav-hover">Favourite</span>
               </a></Link>
               <span className="favn">{NofavItems}</span>
-              <Link href="/bag"><a className="bag"><FiShoppingBag size={20}/>
-              {NobagItems===0?<span className="empty-bag-hover">Bag</span>:<div className="bag-hover"><Bag hover={true}/></div>}
-              </a></Link>
+              <span className="bag" onClick={()=>Router.push('/bag')}><FiShoppingBag size={20}/>
+              {NobagItems===0?<span className="empty-bag-hover">Bag</span>:<div className="bag-hover" onClick={()=>Router.push('/bag')}><Bag hover={true}/></div>}
+              </span>
               <span className="bagn">{NobagItems}</span>
             </div>
           </div>
@@ -186,6 +186,7 @@ const Navbar = ()=>{
         .bag{
           grid-area:bag;
           position:relative;
+          cursor:pointer;
         }
         .bag:hover .empty-bag-hover{
           display:block;
@@ -211,14 +212,14 @@ const Navbar = ()=>{
         }
         .bagNotification{
           width:400px;
-          height:230px;
+          height:250px;
           opacity:0;
           position:absolute;
           top:3rem;
           right:0;
           background:white;
           z-index:100;
-          padding:0.8rem;
+          padding:1.5rem;
           padding-bottom:0;
           cursor:pointer;
           transition: all 0.2s ease-in-out;

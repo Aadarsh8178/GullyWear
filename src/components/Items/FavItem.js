@@ -42,7 +42,7 @@ function FavItem({item}) {
             <div className="side">
                 <div className="details">
                     <p className="desc">{description}</p>
-                    <p className="price"><span>&#8377;</span>{price}</p>
+                    <p className="price">Rs.{price}</p>
                     <div className="small-details">
                         <span className="align">Brand: </span><span>{brand}</span>
                         <span className="align">Color: </span><span>{color}</span>

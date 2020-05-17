@@ -48,7 +48,7 @@ function favourite() {
                     display:flex;
                     flex-direction:column;
                     background:rgb(250, 249, 248);
-                    min-height:90vh;
+                    min-height:95vh;
                     align-items:center;
                 }
                 .fav-heading{

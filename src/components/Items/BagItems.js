@@ -10,6 +10,7 @@ function BagItems({item,size,setTotalPrice,hover,notification}) {
     let flex="flex"
     let margin="2rem"
     let img="width:142px;height:213px;"
+    let margintop = "24px"
     if(hover){
         display="none"
         flex="none"
@@ -17,6 +18,7 @@ function BagItems({item,size,setTotalPrice,hover,notification}) {
     }
     if(notification){
         img = "width:101px;height:151.5px;" 
+        margintop="10px"
     }
     const {removeFromBag,addtoFav} = useContext(LookContext)
     const {slug,images,price,description,brand,color,qty}= item
@@ -43,12 +45,12 @@ function BagItems({item,size,setTotalPrice,hover,notification}) {
             <div className="side">
                 <div className="details">
                     <p className="desc">{description}</p>
-                    <p className="price"><span>&#8377;</span>{price}</p>
+                    <p className="price">Rs.{price}</p>
                     <div className="small-details">
                         <p><span>Brand:</span><span>{brand}</span></p>
                         <p><span>Size:</span><span>{size}</span></p>
                         <p><span>Color: </span><span>{color}</span></p>
-                        <p><span>Price:</span><span style={{fontWeight:"600"}}>{bagprice}</span></p>
+                        <p><span>Price:</span><span style={{fontWeight:"600"}}>Rs.{bagprice}</span></p>
                     </div> 
                 </div>
                 <div className="buttons big">
@@ -88,7 +90,7 @@ function BagItems({item,size,setTotalPrice,hover,notification}) {
             }
             .side{
                 display:flex;
-                margin-top:24px;
+                margin-top:${margintop};
                 margin-left:1.5rem;
                 flex-direction:column;
                 width:50%;

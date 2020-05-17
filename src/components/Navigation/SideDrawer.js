@@ -76,7 +76,7 @@ export default function SideDrawer(props) {
             grid-auto-rows:max-content;
             font-size: 11px;
             text-indent: 30px;
-            background: white;
+            background: rgb(250, 249, 248);
             overflow: hidden;
             height: 100%;
             width:0;

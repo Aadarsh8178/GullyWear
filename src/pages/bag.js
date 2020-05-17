@@ -68,6 +68,7 @@ function bag(props) {
                 .empty-bag p{
                     font-size:14px;
                     font-weight:400;
+
                 }
                 .link{
                     margin-top:1.5rem;
@@ -144,6 +145,7 @@ function bag(props) {
                 }
                 .cart-items{
                     margin-right:1.5rem;
+                    
                     ${cartitems}
                 }
                 .cart-items::-webkit-scrollbar {
@@ -168,7 +170,7 @@ function bag(props) {
                 .discount{
                     display:${display};
                     font-size:14px;
-                    font-weight:300;
+                    font-weight:400;
                     text-align:left;
                     text-transform: uppercase;
                     width:100%;
@@ -208,7 +210,7 @@ function bag(props) {
                     transition: all 0.2s ease-in-out;
                 }
                 .details{
-                    font-weight:500;
+                    font-weight:400;
                 }
                 .total{
                     margin-top:0.5rem;
@@ -245,9 +247,9 @@ function bag(props) {
                         min-width:90%;
                     }
                     .cart-items{
-                        padding-left:1rem;
                         margin-right:0;
                         margin-bottom:0;
+                        padding:1rem;
                         min-width:90%;
                     }
                 }

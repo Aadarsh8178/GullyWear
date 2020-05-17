@@ -48,7 +48,7 @@ const SingleItem = ()=> {
         <div className="product">
             <p className="brand">{item.brand}</p>
             <p className="Maindesc">{item.description}</p>
-            <p className="price"><span>&#8377;</span>{item.price}</p>
+            <p className="price">Rs.{item.price}</p>
         <style jsx>{`
             .product{
                 align-self:start;
