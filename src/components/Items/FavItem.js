@@ -12,6 +12,7 @@ function FavItem({item}) {
     const {slug,images,price,description,brand,color,sizes}= item
     const [size,setSize] = useState('Select Size')
     const [showModal,setShowModal] = useState(false);
+    const url = window.location.origin
     const handleBagClick = ({item,slug,size})=>{
         if(size==='Select Size'){
             setShowModal(true)
@@ -33,7 +34,7 @@ function FavItem({item}) {
             </Modal>
         </div>
           <div className="card">
-            <a  href={`http://localhost:3000/singleitem/${slug}`}>
+            <a  href={`${url}/singleitem/${slug}`}>
                     <img 
                     className="img"
                     src={images[0].url}

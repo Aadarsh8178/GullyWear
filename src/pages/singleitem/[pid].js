@@ -8,6 +8,7 @@ import {FiStar} from 'react-icons/fi';
 const SingleItem = ()=> {
     const router = useRouter()
     const {pid} = router.query
+    
     let [current,setCurrent] = useState(0);
     let [item,setItem] = useState(null);
     const handleChange = (newValue)=>{
@@ -79,9 +80,12 @@ const SingleItem = ()=> {
                 {it.link!==""?<a href={it.link} target="_blank" className="link"><div className="buy">Buy</div></a>:null}
             </div>
         <style jsx>{`
+            .desc{
+              width:70%;
+            }
             .add{
                 display:flex;
-                width:30vw;
+                width:100%;
                 margin-top:3rem;
               }
               .favorite,.buy{
@@ -112,10 +116,14 @@ const SingleItem = ()=> {
                 background:black;
                 color:white;
                 transition:all 0.2s linear; 
-
               }
               a{
                 text-decoration:none;
+              }
+              @media screen and (max-width:768px){
+                .desc{
+                  width:100%;
+                }
               }
         `}</style>
         </div>)
@@ -142,16 +150,16 @@ const SingleItem = ()=> {
         </div>
     <style jsx>{`
           .Align{
-              display: flex;
-              flex-wrap:wrap; 
+              display: flex; 
               flex-direction:row;
               height:calc(100vh - 85px);
               background:rgb(250, 249, 248);
+              width:100%;
           }
           .sliderTop{
             position:relative;
             padding-top:1rem;
-            width:50vw; 
+            width:50%; 
             height:calc(100vh - 85px);
           }
           .bagSlider{
@@ -172,20 +180,26 @@ const SingleItem = ()=> {
           }
             .single-item-info {
               margin-top:2%;
-              width: 35vw;
+              width: 50%;
               max-width: 1170px;
               vertical-align: baseline;
             }
-            
-            
             @media screen and (max-width:768px){
               .sliderTop{
                 width:100vw; 
+                height:70%;
+                margin:2rem 0;
               }
               .Align{
                 flex-direction:column;
-                height:100%;
+                justify-content:center;
+                height:70%;
               }  
+              .single-item-info{
+                margin:0 auto;
+                width:70%;
+                margin-bottom:2rem;
+              }
             }
     `}</style>
         </>

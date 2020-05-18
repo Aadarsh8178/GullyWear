@@ -6,6 +6,7 @@ import {AiFillStar} from 'react-icons/ai';
 import PropTypes from 'prop-types'
 
 const Item = ({item})=> {
+    const url = window.location.origin
     const {addtoFav,removeFav} = useContext(LookContext)
     const [fav,setFav] = useState(item.fav)
     const {slug,brand,description,price,images} = item
@@ -17,10 +18,11 @@ const Item = ({item})=> {
       }
       setFav(prev => !prev)
     }
+    
     return (
         <>
         <div className="item">
-          <a href={`http://localhost:3000/singleitem/${slug}`} target="_blank">
+          <a href={`${url}/singleitem/${slug}`}>
             <div className="img-container">
                 <img src={images[0].url}
                  alt="Unable to load"/> 

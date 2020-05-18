@@ -71,4 +71,7 @@ export default css.global`
     color:black;
     transition: all 0.2s ease-in-out;
 }
+.hide{
+    display:none;
+}
 `

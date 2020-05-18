@@ -82,6 +82,7 @@ const Slider = (props)=> {
         setTouched(true);
         setX(-(index*100));
     }
+    
     return (
         <div className="slider" 
         onTouchStart={handleTouchStart}

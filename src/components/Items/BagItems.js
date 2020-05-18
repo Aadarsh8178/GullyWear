@@ -11,6 +11,7 @@ function BagItems({item,size,setTotalPrice,hover,notification}) {
     let margin="2rem"
     let img="width:142px;height:213px;"
     let margintop = "24px"
+    const url = window.location.origin
     if(hover){
         display="none"
         flex="none"
@@ -36,7 +37,7 @@ function BagItems({item,size,setTotalPrice,hover,notification}) {
     return (
         <div className="item">
           <div className="card">
-            <a  href={`http://localhost:3000/singleitem/${slug}`}>
+            <a  href={`${url}/singleitem/${slug}`}>
                     <img 
                     className="img"
                     src={images[0].url}
