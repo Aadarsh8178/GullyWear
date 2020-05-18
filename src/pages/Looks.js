@@ -2,7 +2,7 @@ import React,{useContext} from 'react'
 
 import {LookContext} from '../store/context'
 import ItemsContainer from '../components/Items/ItemsContainer'
-const Looks = () => {
+const looks = () => {
     const context = useContext(LookContext)
     const {loading,sortedLooks,looks} = context;
     return (
@@ -10,4 +10,4 @@ const Looks = () => {
     )
 }
 
-export default Looks
+export default looks
