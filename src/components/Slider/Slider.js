@@ -44,12 +44,20 @@ const Slider = (props)=> {
     const goRight = ()=>{
         x=== -100 * (sliderArr.length-1)?setX(0):setX(x => x-100);
     }
-
+    const is_touch_enabled = ()=> { 
+        return ( 'ontouchstart' in window ) ||  
+               ( navigator.maxTouchPoints > 0 ) ||  
+               ( navigator.msMaxTouchPoints > 0 ); 
+    } 
     useEffect(()=>{
         if(props.autoplay){
             timer.current = setInterval(()=>{
                 goRight()
             },props.time);
+        }
+        if(is_touch_enabled()){
+            document.getElementById('goLeft').style.display = 'none'
+            document.getElementById('goRight').style.display = 'none'
         }
         return ()=>{
             clearInterval(timer.current)
@@ -60,6 +68,7 @@ const Slider = (props)=> {
         if(touched)
             clearInterval(timer.current)        
     },[x])
+    
     const handleTouchStart = e => {
         setTouched(true);
         lastTouch = e.nativeEvent.touches[0].clientX;
@@ -98,8 +107,8 @@ const Slider = (props)=> {
                    )
                })
            }
-           <FiChevronLeft className="goLeft" onClick={() => { setTouched(true); goLeft(); }}/>
-           <FiChevronRight className="goRight" onClick={() => { setTouched(true); goRight(); }}/>
+           <FiChevronLeft id="goLeft" onClick={() => { setTouched(true); goLeft(); }}/>
+           <FiChevronRight id="goRight" onClick={() => { setTouched(true); goRight(); }}/>
            <div className="sliderBullets">
                 {
                     sliderArr.map((item,index) =>{

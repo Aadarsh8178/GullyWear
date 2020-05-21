@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useRef,useEffect} from "react";
 import {checkValidity} from './validations';
 import styles from './styles'
 
@@ -33,8 +33,14 @@ const initForm = {
     }
 }
 function Login() {
+    const emailref = useRef()
+    const passwordRef = useRef()
+    const loginRef = useRef()
     const [form,setForm] = useState(initForm)
     
+    useEffect(()=>{
+      emailref.current.focus()
+    },[])
     const handleInputChange = (event,controlName)=>{
       const updatedControls = {
         ...form,
@@ -47,12 +53,28 @@ function Login() {
     }
     setForm(updatedControls)
     }
+    const firstKeyDown = (e)=>{
+      if(e.key==='Enter'){
+        passwordRef.current.focus()
+      }
+    }
+    const secondKeyDown = (e)=>{
+      if(e.key==='Enter'){
+        loginRef.current.focus()
+      }
+    }
+    const handleLogin = (e)=>{
+      if(e.key==='Enter'){
+        alert('Working on Login')
+      }
+    }
     return (
       <>
       <div className="base-container">
           <div className="form">
             <div className="form-group">
               <Input 
+                ref={emailref}
                 label='Email'
                 elementType='input'
                 elementConfig={form.email.elementConfig}
@@ -62,10 +84,12 @@ function Login() {
                 shouldValidate={form.email.validation}
                 touched={form.email.touched}
                 error={form.email.valid.error}
+                onKeyDown={firstKeyDown}
               />
             </div>
             <div className="form-group">
               <Input 
+                  ref={passwordRef}
                   label='password'
                   elementType='input'
                   elementConfig={form.password.elementConfig}
@@ -75,11 +99,12 @@ function Login() {
                   shouldValidate={form.password.validation}
                   touched={form.password.touched}
                   error={form.password.valid.error}
+                  onKeyDown={secondKeyDown}
                 />
             </div>
           </div>
         <div className="footer">
-          <button type="button" className="btn">
+          <button ref={loginRef} onKeyDown={handleLogin} type="button" className="btn">
             Login
           </button>
         </div>

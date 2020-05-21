@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useRef,useEffect} from "react";
 import {checkValidity} from './validations';
 import styles from './styles'
 
@@ -44,9 +44,15 @@ const initForm = {
     }
 }
 function Register() {
-    
+    const usernameRef = useRef() 
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const registerRef = useRef()
+
     const [form,setForm] = useState(initForm)
-    
+    useEffect(()=>{
+      usernameRef.current.focus()
+    },[])
     const handleInputChange = (event,controlName)=>{
       const updatedControls = {
         ...form,
@@ -59,12 +65,33 @@ function Register() {
     }
     setForm(updatedControls)
     }
+    const firstKeyDown = (e)=>{
+      if(e.key==='Enter'){
+        emailRef.current.focus()
+      }
+    }
+    const secondKeyDown = (e)=>{
+      if(e.key==='Enter'){
+        passwordRef.current.focus()
+      }
+    }
+    const thirdKeyDown = (e)=>{
+      if(e.key==='Enter'){
+        registerRef.current.focus()
+      }
+    }
+    const handleRegister = (e)=>{
+      if(e.key==='Enter'){
+        alert('Working on Register')
+      }
+    }
     return (
         <>
         <div className="base-container">
             <div className="form">
                 <div className="form-group">
                 <Input 
+                  ref={usernameRef}
                   label='username'
                   elementType='input'
                   elementConfig={form.username.elementConfig}
@@ -74,10 +101,12 @@ function Register() {
                   shouldValidate={form.username.validation}
                   touched={form.username.touched}
                   error={form.username.valid.error}
+                  onKeyDown={firstKeyDown}
                 />
                 </div>
                 <div className="form-group">
                 <Input 
+                ref={emailRef}
                 label='Email'
                 elementType='input'
                 elementConfig={form.email.elementConfig}
@@ -87,10 +116,12 @@ function Register() {
                 shouldValidate={form.email.validation}
                 touched={form.email.touched}
                 error={form.email.valid.error}
+                onKeyDown={secondKeyDown}
               />
                 </div>
                 <div className="form-group">
                 <Input 
+                  ref={passwordRef}
                   label='password'
                   elementType='input'
                   elementConfig={form.password.elementConfig}
@@ -100,10 +131,11 @@ function Register() {
                   shouldValidate={form.password.validation}
                   touched={form.password.touched}
                   error={form.password.valid.error}
+                  onKeyDown={thirdKeyDown}
                 />
                 </div>
             </div>
-            <button type="button" className="btn">
+            <button ref={registerRef} onKeyDown={handleRegister} type="button" className="btn">
                 Register
             </button>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const input = ( props ) => {
+const input = ( props,ref ) => {
     const inputClasses = ['InputElement'];
 
     if (props.invalid && props.shouldValidate && props.touched) {
@@ -11,10 +11,13 @@ const input = ( props ) => {
         <div className="Input">
         <label className='Label'>{props.label}</label>
         <input
+                ref={ref}
                 className={inputClasses.join(' ')}
                 {...props.elementConfig}
                 value={props.value}
-                onChange={props.changed} />
+                onChange={props.changed} 
+                onKeyDown={props.onKeyDown}
+                />
         <span className={props.error!==''?'active':''}>{props.error}</span>
         <style jsx>{`
             .Input{
@@ -65,4 +68,5 @@ const input = ( props ) => {
 
 };
 
-export default input;
+const forwardedInput = React.forwardRef(input)
+export default forwardedInput;

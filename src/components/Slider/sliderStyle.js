@@ -15,10 +15,10 @@ export default css.global`
 .slide{
     min-width:100%;
     height:100%;
-    transition: 0.5s;
+    transition: 0.5s; 
 }
 
-.goLeft{
+#goLeft{
     position:absolute;
     top:50%;
     transform:translate(-15%,-50%);
@@ -29,7 +29,7 @@ export default css.global`
     cursor:pointer;
     transition: all 0.2s linear;
 }
-.goRight{
+#goRight{
     position:absolute;
     background: none;
     top:50%;
@@ -40,13 +40,13 @@ export default css.global`
     cursor:pointer;
     transition: all 0.2s linear;
 }
-.goRight:hover{
+#goRight:hover{
     width:12%;
     height:12%;
     color:rgb(178, 119, 184);;
     transition: all 0.2s linear;
 }
-.goLeft:hover{
+#goLeft:hover{
     width:12%;
     height:12%;
     color:rgb(178, 119, 184);
