@@ -1,5 +1,5 @@
 import React from 'react';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Router from 'next/router'
 import Navbar from '../components/Navigation/Navbar'
 import {LookProvider} from '../store/context'

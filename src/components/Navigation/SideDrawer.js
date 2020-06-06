@@ -1,7 +1,21 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import Link from 'next/link'
+import {LookContext} from '../../store/context';
 
 export default function SideDrawer(props) {
+    const context  = useContext(LookContext)
+    const {admin,adminLogout} = context
+
+    let login = admin //admin||user
+    const logout = ()=>{
+        if(admin){
+            adminLogout()
+        }
+        // }else{
+        //     userLogout()
+        // }
+    }
+    
     return (
         <div className={props.open?"sidebar open":"sidebar"}>
             <div className="content show">
@@ -22,12 +36,20 @@ export default function SideDrawer(props) {
                             <li>
                                 <Link href="/markdowns"><div><a onClick={props.handleToggle}>Markdowns</a></div></Link>
                             </li>
-                        </ul>
+                            <li className="adminRoute">
+                                <Link href="/admin/addProduct"><div><a onClick={props.handleToggle}>Add Product</a></div></Link>
+                            </li>
+                            <li className="adminRoute">
+                                <Link href="/admin/products"><div><a onClick={props.handleToggle}>Products</a></div></Link>
+                            </li>
+                        </ul>    
                     </div>
                 <div className="item">
                     <ul>
                         <li>
-                            <div><a onClick={()=> {props.setShowLogin(true); props.handleToggle()}}>Sign in/join</a></div>
+                            {login
+                            ?<div><a onClick={()=> {logout(); props.handleToggle()}}>Logout</a></div>
+                            :<div><a onClick={()=> {props.setShowLogin(true); props.handleToggle()}}>Sign in/join</a></div>}  
                         </li>
                     </ul>
                 </div>
@@ -117,6 +139,9 @@ export default function SideDrawer(props) {
         }
         li{
             list-style:none;
+        }
+        .adminRoute{
+            display:${admin?'block':'none'} !important;
         }
         a{
             text-decoration:none;

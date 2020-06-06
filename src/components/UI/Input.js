@@ -5,7 +5,6 @@ const input = ( props,ref ) => {
 
     if (props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push('Invalid');
-
     }
     return (
         <div className="Input">
@@ -65,7 +64,6 @@ const input = ( props,ref ) => {
         `}</style>
         </div>
     );
-
 };
 
 const forwardedInput = React.forwardRef(input)

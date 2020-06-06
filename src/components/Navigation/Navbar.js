@@ -1,4 +1,4 @@
-import React,{useState,useContext, useEffect} from 'react'
+import React,{useState,useContext} from 'react'
 import Link from 'next/link'
 import {useRouter} from 'next/router';
 
@@ -21,7 +21,8 @@ import Login from '../Login/index'
 const Navbar = ()=>{
   const Router = useRouter();
   const context = useContext(LookContext)
-  const {signedIn,NofavItems,NobagItems,bagItems,bagNotification} = context
+  const {signedIn,NofavItems,NobagItems,bagItems,
+    bagNotification,admin,toggledrawer,closedrawer,sidedrawer:isOpen} = context
   
   const [search,setSearch] = useState(false)
   const [showLogin,setShowLogin] = useState(false)
@@ -43,11 +44,23 @@ const Navbar = ()=>{
   const closeModal = ()=>{
     setShowLogin(false)
   }
-  const {toggledrawer,closedrawer,sidedrawer:isOpen} = context
+  let adminRoutes = (<>
+    <li onClick={closedrawer}>
+        <Link href="/admin/addProduct"><a>Add Product</a></Link>
+    </li>
+    <li onClick={closedrawer}>
+        <Link href="/admin/products"><a>Products</a></Link>
+    </li>
+  </>)
+
+  if(!admin){
+    adminRoutes=null
+  }
   return (
     <div>
       <Modal show={showLogin} modalClosed={closeModal}><Login/></Modal>
       <Backdrop open={isOpen} onclick={toggledrawer}></Backdrop>
+      
       <nav className="navbar">
           <div id="loading"><Loading area={15} ball={5} base={5} gap={11}/></div>
           <div className="nav-header">
@@ -94,18 +107,21 @@ const Navbar = ()=>{
               <li onClick={closedrawer}>
                 <Link href="/markdowns"><a>Markdowns</a></Link>
               </li>
+              {adminRoutes}
             </ul>
           </div> 
           <div className={bagNotification?"bagNotification on":"bagNotification"} onClick={()=>Router.push('/bag')}>
             {bagNotification?
             <>
-            <p className="notification-title"><span>Shopping Bag</span><BsBag style={{marginRight:"1rem"}} size={20}/></p>
-            <BagItem
-              hover={true}
-              notification={true}
-              item={bagItems[bagItems.length - 1].look} 
-              size={bagItems[bagItems.length - 1].size}  
-              setTotalPrice={()=>{}}/></>:null}
+            
+              <p className="notification-title"><span>Shopping Bag</span><BsBag style={{marginRight:"1rem"}} size={20}/></p>
+              <BagItem
+                hover={true}
+                notification={true}
+                item={bagItems[bagItems.length - 1].look} 
+                size={bagItems[bagItems.length - 1].size}  
+                setTotalPrice={()=>{}}/>
+            </>:null}
           </div>
       </nav>
       <SideDrawer 
@@ -336,7 +352,7 @@ const Navbar = ()=>{
           height: 23px;
           width:100;
           display: grid;
-          grid-template-columns: repeat(auto-fit,90px);
+          grid-template-columns: repeat(auto-fit,100px);
           justify-content:center;
           justify-items:center;
           list-style:none;

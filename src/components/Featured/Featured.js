@@ -24,6 +24,7 @@ const Featured = ()=>{
     <style jsx>{`
           .items {
             text-align:center;
+            width:100%;
           }
           .items-center {
             width:100%;

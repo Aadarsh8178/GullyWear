@@ -10,7 +10,7 @@ function index() {
       <span onClick={()=>setSignin(true)} className={signin?'active login':'login'}>Signin</span>
       <span onClick={()=>setSignin(false)} className={signin?'login':'active login'}>SignUp</span>
       </div>
-      {signin?<Login/>:<Register/>}
+      {signin?<Login type='user'/>:<Register/>}
       <style jsx>{`
       .SigninUp{
         display:flex;

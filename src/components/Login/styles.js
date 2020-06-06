@@ -33,10 +33,15 @@ border-radius: 3px;
 transition: all 250ms ease-in-out;
 cursor: pointer;
 }
-btn:hover {
-background-color: #2386c8;
-}
-btn:focus {
+.btn:focus {
 outline: none;
+}
+.disabled{
+  background-color:grey;
+  cursor:not-allowed;
+}
+.error{
+  margin:1rem 0;
+  color:rgb(145, 9, 9);
 }
 `

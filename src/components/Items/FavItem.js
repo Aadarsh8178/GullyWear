@@ -1,5 +1,4 @@
 import React,{useContext, useState} from 'react';
-import Link from 'next/link';
 import {LookContext} from '../../store/context';
 
 import {FiShoppingBag} from "react-icons/fi";

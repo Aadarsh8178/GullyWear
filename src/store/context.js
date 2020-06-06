@@ -1,4 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
+import axios from 'axios'
+
 import * as actionType from './actionType';
 
 import items from '../data'
@@ -26,7 +28,8 @@ const initialState = {
     deliveryPrice:100,
     freedelivery:1000,
     totalPrice:0,
-    bagNotification:false
+    bagNotification:false,
+    admin:false
 }
 const formatData = (items,favouriteLooks)=>{
     let tempItems = items.map(item => {
@@ -175,6 +178,7 @@ const removeFromBag = (state,id,size)=>{
         })
     }
 }
+
 const reducer = (state,action)=>{
     switch(action.type){
         case actionType.TOGGLE_DRAWER: return {...state,sidedrawer:!state.sidedrawer}
@@ -193,6 +197,8 @@ const reducer = (state,action)=>{
         case actionType.SETFAVONLOOKS:return {...state,looks:action.looks}
         case actionType.BAGNOTIFICATION:return {...state,bagNotification:true}
         case actionType.BAGNOTIFICATIOFF:return {...state,bagNotification:false}
+        case actionType.ADMINLOGGEDIN: return {...state,admin:true}
+        case actionType.ADMINLOGOUT: return {...state,admin:false}
         default: return state
     }
 }
@@ -203,6 +209,7 @@ const LookProvider = (props)=>{
     useEffect(()=>{
         (async function(){
             let looks = await formatData(items,state.favouriteLooks);
+            let admin = await localStorage.getItem('AdminToken')?true:false
             let featuredLooks = looks.filter(look => look.featured===true)
             let mainpage = looks.find(look => look.type==="Main")
             let maxPrice = Math.max(...looks.map(item => item.price))
@@ -216,6 +223,7 @@ const LookProvider = (props)=>{
                 maxPrice,
                 minPrice,
                 mainpage,
+                admin
             }
             autofetchBagFav(looks)
             dispatch({type:actionType.INIT_SETUP,newState:addProp});
@@ -269,7 +277,31 @@ const LookProvider = (props)=>{
         await dispatch({type:actionType.FILTER_LOOKS})   
         dispatch({type:actionType.FILTER_APPLIED});
     }
-    
+    const adminLogin = async (email,password)=>{
+        try{
+            let data = await axios.post('http://localhost:8000/admin/login',{
+                email,
+                password
+            })
+            console.log(data.data)
+            await localStorage.setItem('AdminToken',data.data.token)
+            dispatch({type:actionType.ADMINLOGGEDIN})
+            return false
+        }catch(e){
+            return true
+        }
+    }
+    const adminLogout = async ()=>{
+        try{
+            let token = await localStorage.getItem('AdminToken')
+            await axios.post('http://localhost:8000/admin/logout',{token})
+            localStorage.removeItem('AdminToken')
+            dispatch({type:actionType.ADMINLOGOUT})
+            return false
+        }catch(e){
+            return true
+        }
+    }
     return (
         <LookContext.Provider value={{...state,
         getLook:getLook,
@@ -285,7 +317,9 @@ const LookProvider = (props)=>{
             return dispatch({type:actionType.ADDTOBAG,look,size})
         },
         removeFromBag:(id,size)=>dispatch({type:actionType.REMOVEFROMBAG,id,size}),
-        autofetchBagFav:(looks) =>autofetchBagFav(looks)
+        autofetchBagFav:(looks) =>autofetchBagFav(looks),
+        adminLogin:(email,password) => adminLogin(email,password),
+        adminLogout:adminLogout
         }}>
             {props.children}
         </LookContext.Provider>

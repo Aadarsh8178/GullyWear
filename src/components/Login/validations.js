@@ -5,21 +5,21 @@ export const checkValidity = (value, rules)=> {
     }
     
     if (rules.required) {
-        isValid.valid = value.trim() !== '' && isValid;
+        isValid.valid = value.trim() !== '' && isValid.valid;
         if(!isValid.valid){
             isValid.error = 'Required'
         }
     }
 
     if (rules.minLength) {
-        isValid.valid = value.length >= rules.minLength && isValid
+        isValid.valid = value.length >= rules.minLength && isValid.valid
         if(!isValid.valid){
             isValid.error = 'Min length ' + rules.minLength
         }
     }
 
     if (rules.maxLength) {
-        isValid.valid = value.length <= rules.maxLength && isValid
+        isValid.valid = value.length <= rules.maxLength && isValid.valid
         if(!isValid.valid){
             isValid.error = 'Max length ' + rules.maxLength
         }
@@ -27,7 +27,7 @@ export const checkValidity = (value, rules)=> {
 
     if (rules.isEmail) {
         const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        isValid.valid = pattern.test(value) && isValid
+        isValid.valid = pattern.test(value) && isValid.valid
         if(!isValid.valid){
             isValid.error = 'Invalid Email'
         }
@@ -35,14 +35,14 @@ export const checkValidity = (value, rules)=> {
 
     if (rules.isNumeric) {
         const pattern = /^\d+$/;
-        isValid.valid = pattern.test(value) && isValid
+        isValid.valid = pattern.test(value) && isValid.valid
         if(!isValid.valid){
             isValid.error = 'Not a Number'
         }
     }
     if(rules.phoneno){
         const pattern = /^[0]?[789]\d{9}$/;
-        isValid.valid = pattern.test(value) && isValid
+        isValid.valid = pattern.test(value) && isValid.valid
         if(!isValid.valid){
             isValid.error = 'Invalid Mobile Number'
         }

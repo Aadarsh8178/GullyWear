@@ -1,4 +1,5 @@
 import React,{useState,useRef,useEffect} from "react";
+
 import {checkValidity} from './validations';
 import styles from './styles'
 
@@ -32,16 +33,17 @@ const initForm = {
       touched: false,
     }
 }
-function Login() {
+function Login({handleLoginClick}) {
     const emailref = useRef()
     const passwordRef = useRef()
     const loginRef = useRef()
     const [form,setForm] = useState(initForm)
+    const [error,setError] = useState(false)
     
     useEffect(()=>{
       emailref.current.focus()
     },[])
-    const handleInputChange = (event,controlName)=>{
+    const handleInputChange =(event,controlName)=>{
       const updatedControls = {
         ...form,
         [controlName] : {
@@ -50,8 +52,9 @@ function Login() {
             valid: checkValidity(event.target.value,form[controlName].validation),
             touched : true
         }
-    }
-    setForm(updatedControls)
+      } 
+      setForm(updatedControls) 
+      setError(false)
     }
     const firstKeyDown = (e)=>{
       if(e.key==='Enter'){
@@ -63,14 +66,17 @@ function Login() {
         loginRef.current.focus()
       }
     }
-    const handleLogin = (e)=>{
-      if(e.key==='Enter'){
-        alert('Working on Login')
+    const handleLogin = async (e)=>{
+      if(!(form.email.valid.valid&&form.password.valid.valid)){
+        return;
       }
+      let err = await handleLoginClick(form.email.value,form.password.value)
+      setError(err)
     }
     return (
       <>
       <div className="base-container">
+          {error?<p className="error">INVALID EMAIL OR PASSWORD</p>:null}
           <div className="form">
             <div className="form-group">
               <Input 
@@ -104,7 +110,7 @@ function Login() {
             </div>
           </div>
         <div className="footer">
-          <button ref={loginRef} onKeyDown={handleLogin} type="button" className="btn">
+          <button className={form.email.valid.valid&&form.password.valid.valid?"btn":"btn disabled"} ref={loginRef} onClick={handleLogin} type="button" >
             Login
           </button>
         </div>

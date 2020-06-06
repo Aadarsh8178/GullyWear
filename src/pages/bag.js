@@ -8,7 +8,9 @@ function bag(props) {
     let checkoutwidth = "0"
     let cartitems=""
     let minHeight="90vh"
+    let cursor="cursor:auto"
     if(props.hover){
+        cursor=""
         minHeight="0"
         hover = true
         display="none"
@@ -126,6 +128,7 @@ function bag(props) {
                     font-size:14px;
                     width:100%;
                     height:100%;
+                    ${cursor};
                     min-height:${minHeight}
                 }
                 .bag-heading{
