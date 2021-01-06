@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "next": "^9.3.6",
     "next-images": "^1.4.0",
     "next-page-transitions": "^1.0.0-beta.2",
